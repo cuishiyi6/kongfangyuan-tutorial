@@ -1,0 +1,94 @@
+/* 视频容器样式 */
+.video-container {
+    margin: 30px 0;
+    padding: 20px 30px 30px;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.video-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 标题容器样式 */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.video-container h3 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+    padding-left: 12px;
+}
+
+/* 视频序号标记 */
+.video-number {
+    width: 45px;
+    height: 45px;
+    background: #409EFF;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* 视频播放器样式 */
+.video-player {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    background: #000;
+    aspect-ratio: 16 / 9;
+}
+
+/* 加载动画 */
+.video-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #409EFF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .video-container {
+        padding: 15px;
+    }
+    
+    .video-container h3 {
+        font-size: 18px;
+    }
+}
+
+/* 可访问性 */
+.video-container:focus-within {
+    outline: 2px solid #409EFF;
+} 
