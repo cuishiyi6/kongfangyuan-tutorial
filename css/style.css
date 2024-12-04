@@ -17,28 +17,113 @@ h1 {
     font-weight: 600;
 }
 
-/* 文档按钮样式 */
-.doc-button {
+/* 弹窗样式 */
+.modal {
+    display: none;
     position: fixed;
-    right: 40px;
-    top: 20px;
-    z-index: 1000;
-    padding: 12px 24px;
-    background: #409EFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    text-decoration: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.doc-button:hover {
-    background: #66b1ff;
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    position: relative;
+    margin: auto;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #409EFF;
+}
+
+.qr-code {
+    margin: 20px 0;
+}
+
+.qr-code img {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* 联系方式栏样式 */
+.contact-bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    padding: 20px 40px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    animation: slideUp 0.5s ease;
+}
+
+.contact-item {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    background: rgba(64, 158, 255, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.contact-item:active {
+    transform: translateY(0);
+}
+
+.contact-item img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.contact-item:hover img {
+    transform: scale(1.1);
 }
 
 /* 响应式设计 */
@@ -51,9 +136,269 @@ h1 {
         font-size: 24px;
     }
     
-    .doc-button {
-        right: 15px;
-        padding: 8px 16px;
+    .contact-bar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .contact-item {
         font-size: 14px;
     }
-} 
+
+    /* 调整主内容区域的底部边距，防止被联系栏遮挡 */
+    #videoContainer {
+        margin-bottom: 180px;
+    }
+}
+
+/* 章节导航样式 */
+.chapter-nav {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    z-index: 100;
+    transition: all 0.3s ease;
+    max-width: 300px;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+.chapter-toggle {
+    background: #409EFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.chapter-toggle:after {
+    content: '▶';
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.chapter-nav.active .chapter-toggle:after {
+    transform: rotate(90deg);
+}
+
+.chapter-list {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.chapter-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chapter-list::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 2px;
+}
+
+.chapter-list a {
+    color: #2c3e50;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+}
+
+.chapter-list a:before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #409EFF;
+    border-radius: 50%;
+    margin-right: 8px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.chapter-list a:hover {
+    background: #f0f7ff;
+    color: #409EFF;
+    padding-left: 20px;
+    font-weight: 500;
+}
+
+.chapter-list a:hover:before {
+    opacity: 1;
+}
+
+.chapter-list a.active {
+    background: #409EFF;
+    color: white;
+    font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .chapter-nav {
+        left: 10px;
+        max-width: 250px;
+    }
+
+    .chapter-toggle {
+        padding: 8px 15px;
+        font-size: 16px;
+    }
+
+    .chapter-list {
+        max-height: 50vh;
+    }
+
+    .chapter-list a {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+/* 返回顶部按钮 */
+.back-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 100px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: #409EFF;
+}
+
+.back-to-top:hover svg path {
+    fill: white;
+}
+
+/* 添加新的下载区域样式 */
+.download-section {
+    text-align: center;
+    margin: -20px auto 40px;
+    max-width: 800px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.download-desc {
+    color: #606266;
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #409EFF;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    background: #66b1ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(64, 158, 255, 0.3);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+}
+
+.download-icon {
+    fill: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.download-btn:hover .download-icon {
+    transform: translateY(2px);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .download-section {
+        margin: -10px 0 30px;
+        padding: 15px;
+    }
+
+    .download-desc {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .download-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+/* 搜索框样式 */
+.search-section {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.search-input:focus {
+    border-color: #409EFF;
+    box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.1);
+    outline: none;
+}
+  

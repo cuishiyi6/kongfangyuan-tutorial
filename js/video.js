@@ -1,8 +1,11 @@
 // Plyr播放器配置和初始化
 document.addEventListener('DOMContentLoaded', function() {
+    // 存储所有播放器实例
+    let players = [];
+
     // 初始化所有视频播放器
-    const players = Array.from(document.querySelectorAll('.video-player')).map(player => {
-        return new Plyr(player, {
+    players = Array.from(document.querySelectorAll('.video-player')).map((player, index) => {
+        const plyrInstance = new Plyr(player, {
             controls: [
                 'play-large',
                 'play',
@@ -21,12 +24,45 @@ document.addEventListener('DOMContentLoaded', function() {
             iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
             blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
             previewThumbnails: { enabled: false },
-            storage: { enabled: true, key: 'plyr' }
+            storage: { enabled: true, key: 'plyr' },
+            keyboard: { focused: true, global: false }
         });
+
+        // 加载保存的播放进度
+        const savedTime = localStorage.getItem(`video-${index}-progress`);
+        if (savedTime) {
+            plyrInstance.on('ready', () => {
+                plyrInstance.currentTime = parseFloat(savedTime);
+            });
+        }
+
+        // 每5秒保存一次播放进度
+        plyrInstance.on('timeupdate', () => {
+            localStorage.setItem(`video-${index}-progress`, plyrInstance.currentTime);
+        });
+
+        // 播放时自动获得焦点
+        plyrInstance.on('play', () => {
+            player.focus();
+        });
+
+        return plyrInstance;
     });
 
     // 处理加载状态
     handleVideoLoading(players);
+
+    // 添加播放控制
+    players.forEach((player, index) => {
+        player.on('play', () => {
+            // 暂停其他所有视频
+            players.forEach((otherPlayer, otherIndex) => {
+                if (otherIndex !== index && otherPlayer.playing) {
+                    otherPlayer.pause();
+                }
+            });
+        });
+    });
 });
 
 // 处理视频加载状态

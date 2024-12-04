@@ -15,16 +15,83 @@
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 </head>
 <body>
-    <a href="./docs/孔方源智慧社区平台使用手册.docx" download class="doc-button">
-        下载使用说明文档
-    </a>
-
     <h1>孔方源智慧社区平台视频教程</h1>
+
+    <!-- 添加新的下载区域 -->
+    <div class="download-section">
+        <p class="download-desc">在观看视频教程之前，建议先下载使用手册，以便更好地理解操作流程</p>
+        <a href="./docs/孔方源智慧社区平台使用手册.docx" download class="download-btn">
+            <svg class="download-icon" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
+            下载使用说明文档
+        </a>
+    </div>
+
+    <!-- 在下载区域后添加 -->
+    <div class="search-section">
+        <input 
+            type="text" 
+            id="videoSearch" 
+            placeholder="搜索视频教程..." 
+            class="search-input"
+        >
+    </div>
+
+    <!-- 章节导航 -->
+    <div class="chapter-nav">
+        <button class="chapter-toggle">章节目录</button>
+        <div class="chapter-list">
+            <a href="#video-1" data-video="1">1. 物业注册到孔方源平台</a>
+            <a href="#video-2" data-video="2">2. 登陆物业平台添加小区</a>
+            <a href="#video-3" data-video="3">3. 小区添加楼栋、单元、房间</a>
+            <a href="#video-4" data-video="4">4. 添加业主的两种方式</a>
+            <a href="#video-5" data-video="5">5. 如何创建收费标准</a>
+            <a href="#video-6" data-video="6">6. 房间绑定收费标准之后如何批量生成账单</a>
+            <a href="#video-7" data-video="7">7. 如何对业主账单进行收费</a>
+        </div>
+    </div>
 
     <!-- 视频容器 -->
     <div id="videoContainer"></div>
 
+    <!-- 在联系方式栏之前添加弹窗 -->
+    <div class="modal" id="wechatModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>微信客服</h3>
+            <div class="qr-code">
+                <img src="./image/qr-code.svg" alt="微信二维码">
+            </div>
+            <p>扫描二维码添加客服微信</p>
+        </div>
+    </div>
+
+    <!-- 修改联系方式栏 -->
+    <div class="contact-bar">
+        <div class="contact-item" onclick="window.location.href='tel:4008888888'">
+            <img src="./image/phone.svg" alt="电话">
+            <span>联系电话：400-888-8888</span>
+        </div>
+        <div class="contact-item" id="wechatBtn">
+            <img src="./image/wechat.svg" alt="微信">
+            <span>微信客服：KFY888</span>
+        </div>
+        <div class="contact-item" onclick="window.location.href='mailto:business@kongfangyuan.com'">
+            <img src="./image/email.svg" alt="邮箱">
+            <span>商务合作：business@kongfangyuan.com</span>
+        </div>
+    </div>
+
+    <button id="backToTop" class="back-to-top">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+        </svg>
+    </button>
+
     <script src="js/main.js"></script>
     <script src="js/video.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/chapter.js"></script>
 </body>
 </html> 

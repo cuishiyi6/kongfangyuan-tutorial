@@ -91,4 +91,20 @@
 /* 可访问性 */
 .video-container:focus-within {
     outline: 2px solid #409EFF;
+}
+
+.video-progress {
+    width: 100%;
+    height: 4px;
+    background: #f0f2f5;
+    margin-top: 10px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #409EFF;
+    width: 0;
+    transition: width 0.2s ease;
 } 
