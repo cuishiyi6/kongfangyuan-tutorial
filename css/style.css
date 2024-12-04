@@ -152,20 +152,13 @@ h1 {
     }
 }
 
-/* 章节导航样式 */
+/* 修改章节导航样式 */
 .chapter-nav {
     position: fixed;
     left: 20px;
     top: 50%;
     transform: translateY(-50%);
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
     z-index: 100;
-    transition: all 0.3s ease;
-    max-width: 300px;
-    font-family: 'Microsoft YaHei', sans-serif;
 }
 
 .chapter-toggle {
@@ -176,107 +169,90 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
     font-size: 18px;
-    width: 100%;
     text-align: left;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     transition: all 0.3s ease;
     font-weight: 500;
     letter-spacing: 1px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 
-.chapter-toggle:after {
-    content: '▶';
-    font-size: 12px;
-    transition: transform 0.3s ease;
+/* 章节列表弹窗样式 */
+.chapter-list-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.chapter-nav.active .chapter-toggle:after {
-    transform: rotate(90deg);
+.chapter-list-modal.show {
+    display: flex;
+    opacity: 1;
 }
 
 .chapter-list {
-    display: none;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-    max-height: 60vh;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    position: relative;
+    margin: auto;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
     overflow-y: auto;
-    padding-right: 10px;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.chapter-list::-webkit-scrollbar {
-    width: 4px;
-}
-
-.chapter-list::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 2px;
+.chapter-list-modal.show .chapter-list {
+    transform: translateY(0);
 }
 
 .chapter-list a {
+    display: block;
+    padding: 12px 15px;
     color: #2c3e50;
     text-decoration: none;
-    padding: 10px 15px;
     border-radius: 4px;
     transition: all 0.3s ease;
     font-size: 15px;
     font-weight: 400;
     line-height: 1.5;
-    display: flex;
-    align-items: center;
     letter-spacing: 0.5px;
-}
-
-.chapter-list a:before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: #409EFF;
-    border-radius: 50%;
-    margin-right: 8px;
-    opacity: 0;
-    transition: all 0.3s ease;
 }
 
 .chapter-list a:hover {
     background: #f0f7ff;
     color: #409EFF;
     padding-left: 20px;
-    font-weight: 500;
-}
-
-.chapter-list a:hover:before {
-    opacity: 1;
 }
 
 .chapter-list a.active {
     background: #409EFF;
     color: white;
-    font-weight: 500;
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .chapter-nav {
-        left: 10px;
-        max-width: 250px;
-    }
+/* 关闭按钮 */
+.chapter-close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
 
-    .chapter-toggle {
-        padding: 8px 15px;
-        font-size: 16px;
-    }
-
-    .chapter-list {
-        max-height: 50vh;
-    }
-
-    .chapter-list a {
-        font-size: 14px;
-        padding: 8px 12px;
-    }
+.chapter-close:hover {
+    color: #409EFF;
 }
 
 /* 返回顶部按钮 */
@@ -379,11 +355,12 @@ h1 {
     }
 }
 
-/* 搜索框样式 */
+/* 搜索框和下拉框样式 */
 .search-section {
     max-width: 600px;
     margin: 0 auto 30px;
     padding: 0 20px;
+    position: relative;
 }
 
 .search-input {
@@ -400,5 +377,65 @@ h1 {
     border-color: #409EFF;
     box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.1);
     outline: none;
+}
+
+/* 搜索结果下拉框 */
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.search-dropdown.show {
+    display: block;
+}
+
+.search-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-item:hover {
+    background: #f0f7ff;
+}
+
+.search-item .video-number {
+    width: 24px;
+    height: 24px;
+    background: #409EFF;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.search-item .video-title {
+    flex: 1;
+    color: #2c3e50;
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 16px;
+    margin-top: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
 }
   

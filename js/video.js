@@ -1,7 +1,11 @@
-// Plyr播放器配置和初始化
-document.addEventListener('DOMContentLoaded', function() {
-    // 存储所有播放器实例
-    let players = [];
+// 存储所有播放器实例
+let players = [];
+
+// 初始化播放器函数
+function initializePlayers() {
+    // 清除旧的播放器实例
+    players.forEach(player => player.destroy());
+    players = [];
 
     // 初始化所有视频播放器
     players = Array.from(document.querySelectorAll('.video-player')).map((player, index) => {
@@ -63,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-});
+}
 
 // 处理视频加载状态
 function handleVideoLoading(players) {
@@ -75,4 +79,7 @@ function handleVideoLoading(players) {
         player.on('loadstart', () => loading.style.display = 'block');
         player.on('canplay', () => loading.style.display = 'none');
     });
-} 
+}
+
+// 初始化页面时的播放器
+document.addEventListener('DOMContentLoaded', initializePlayers); 

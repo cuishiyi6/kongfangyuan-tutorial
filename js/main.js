@@ -38,9 +38,11 @@ const videoData = [
 ];
 
 // 生成视频HTML
-function generateVideoHTML() {
+function generateVideoHTML(videos = videoData) {
     const container = document.getElementById('videoContainer');
-    videoData.forEach(video => {
+    container.innerHTML = ''; // 清空容器
+    
+    videos.forEach(video => {
         container.innerHTML += `
             <div class="video-container">
                 <div class="title-container">
@@ -60,10 +62,91 @@ function generateVideoHTML() {
             </div>
         `;
     });
+
+    // 重新初始化视频播放器
+    initializePlayers();
+}
+
+// 搜索功能
+function initializeSearch() {
+    const searchInput = document.getElementById('videoSearch');
+    const searchSection = document.querySelector('.search-section');
+    
+    // 创建下拉框
+    const dropdown = document.createElement('div');
+    dropdown.className = 'search-dropdown';
+    searchSection.appendChild(dropdown);
+
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        
+        if (searchTerm === '') {
+            dropdown.classList.remove('show');
+            generateVideoHTML();
+            return;
+        }
+
+        const filteredVideos = videoData.filter(video => 
+            video.title.toLowerCase().includes(searchTerm)
+        );
+
+        if (filteredVideos.length === 0) {
+            dropdown.innerHTML = `
+                <div class="search-item">
+                    <span class="video-title">没有找到相关视频</span>
+                </div>
+            `;
+        } else {
+            dropdown.innerHTML = filteredVideos.map(video => `
+                <div class="search-item" data-video-id="${video.id}">
+                    <div class="video-number">${video.id}</div>
+                    <span class="video-title">${video.title}</span>
+                </div>
+            `).join('');
+        }
+        
+        dropdown.classList.add('show');
+    });
+
+    // 点击下拉项
+    dropdown.addEventListener('click', (e) => {
+        const searchItem = e.target.closest('.search-item');
+        if (!searchItem) return;
+
+        const videoId = searchItem.dataset.videoId;
+        if (!videoId) return;
+
+        // 滚动到对应视频
+        const targetVideo = document.querySelector(`.video-container:nth-child(${videoId})`);
+        if (targetVideo) {
+            targetVideo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // 清空搜索
+            searchInput.value = '';
+            dropdown.classList.remove('show');
+        }
+    });
+
+    // 点击外部关闭下拉框
+    document.addEventListener('click', (e) => {
+        if (!searchSection.contains(e.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    // ESC键关闭下拉框
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            dropdown.classList.remove('show');
+            searchInput.blur();
+        }
+    });
 }
 
 // 初始化页面
-document.addEventListener('DOMContentLoaded', generateVideoHTML);
+document.addEventListener('DOMContentLoaded', () => {
+    generateVideoHTML();
+    initializeSearch();
+});
 
 // 返回顶部功能
 document.addEventListener('DOMContentLoaded', function() {

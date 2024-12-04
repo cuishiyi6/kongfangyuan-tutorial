@@ -1,13 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const chapterNav = document.querySelector('.chapter-nav');
     const chapterToggle = document.querySelector('.chapter-toggle');
-    const chapterList = document.querySelector('.chapter-list');
+    const chapterModal = document.getElementById('chapterModal');
+    const chapterClose = document.querySelector('.chapter-close');
     const chapterLinks = document.querySelectorAll('.chapter-list a');
 
-    // 切换章节列表显示
+    // 打开章节列表
     chapterToggle.addEventListener('click', () => {
-        chapterNav.classList.toggle('active');
-        chapterList.style.display = chapterNav.classList.contains('active') ? 'flex' : 'none';
+        chapterModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    });
+
+    // 关闭章节列表
+    function closeChapterModal() {
+        chapterModal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    chapterClose.addEventListener('click', closeChapterModal);
+
+    // 点击背景关闭
+    chapterModal.addEventListener('click', (e) => {
+        if (e.target === chapterModal) {
+            closeChapterModal();
+        }
+    });
+
+    // ESC键关闭
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && chapterModal.classList.contains('show')) {
+            closeChapterModal();
+        }
     });
 
     // 点击章节链接
@@ -25,30 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const videoId = link.getAttribute('data-video');
             const targetVideo = document.querySelector(`.video-container:nth-child(${videoId})`);
 
+            // 关闭章节列表
+            closeChapterModal();
+
             // 滚动到视频位置
             targetVideo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            // 如果是移动端，点击后关闭章节列表
-            if (window.innerWidth <= 768) {
-                chapterNav.classList.remove('active');
-                chapterList.style.display = 'none';
-            }
-        });
-    });
-
-    // 监听滚动，高亮当前章节
-    window.addEventListener('scroll', () => {
-        const videos = document.querySelectorAll('.video-container');
-        const windowMiddle = window.scrollY + window.innerHeight / 2;
-
-        videos.forEach((video, index) => {
-            const videoTop = video.offsetTop;
-            const videoBottom = videoTop + video.offsetHeight;
-
-            if (windowMiddle >= videoTop && windowMiddle < videoBottom) {
-                chapterLinks.forEach(link => link.classList.remove('active'));
-                chapterLinks[index].classList.add('active');
-            }
         });
     });
 }); 
