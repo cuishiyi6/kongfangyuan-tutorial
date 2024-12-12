@@ -1051,7 +1051,7 @@ h1 {
         margin-bottom: 15px;
     }
 
-    /* 章节列表弹窗优��� */
+    /* 章节列表弹窗优化 */
     .chapter-list {
         width: calc(100% - 30px);
         margin: 15px;
@@ -1144,6 +1144,70 @@ h1 {
     /* 调整搜索框位置 */
     .search-section {
         margin-bottom: 15px;
+    }
+}
+
+/* 添加移动端固定布局样式 */
+@media (max-width: 768px) {
+    html {
+        height: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        min-height: 100%;
+        overflow-x: hidden;
+        position: relative;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* 模态框显示时的样式 */
+    body.modal-open {
+        position: fixed;
+        width: 100%;
+    }
+
+    /* 优化滚动容器 */
+    .video-container {
+        -webkit-overflow-scrolling: touch;
+        overflow-y: auto;
+    }
+
+    /* 优化模态框滚动 */
+    .download-modal-content,
+    .template-modal-content {
+        -webkit-overflow-scrolling: touch;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    /* 防止iOS橡皮筋效果 */
+    .modal-content {
+        overscroll-behavior: contain;
+    }
+
+    /* 优化搜索框位置固定 */
+    .search-section {
+        position: sticky;
+        top: 0;
+        background: #f4f6f9;
+        z-index: 100;
+        padding: 10px;
+        margin: 0 -10px 15px;
+    }
+
+    /* 优化按钮触摸区域 */
+    .download-btn,
+    .template-btn,
+    .back-to-top {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* 优化视频控件触摸区域 */
+    .plyr__controls button {
+        min-height: 44px;
+        min-width: 44px;
     }
 }
   

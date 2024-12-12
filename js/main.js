@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = '';
     });
 
-    // 点击模态���外部关闭
+    // 点击模态框外部关闭
     templateModal.addEventListener('click', function(e) {
         if (e.target === templateModal) {
             templateModal.classList.remove('show');
@@ -222,129 +222,130 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// 添加移动端检测和适配代码
+// 添加防抖函数
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// 添加节流函数
+function throttle(func, limit) {
+    let inThrottle;
+    return function executedFunction(...args) {
+        if (!inThrottle) {
+            func(...args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// 修改移动端适配代码
 document.addEventListener('DOMContentLoaded', function() {
-    // 检测是否为移动设备
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
     if (isMobile) {
-        // 调整视频容器的布局
-        const videoContainers = document.querySelectorAll('.video-container');
-        videoContainers.forEach(container => {
-            container.style.margin = '10px 0';
-            container.style.padding = '10px';
-        });
-
-        // 调整章节导航按钮位置
-        const chapterNav = document.querySelector('.chapter-nav');
-        if (chapterNav) {
-            chapterNav.style.position = 'fixed';
-            chapterNav.style.left = '10px';
-            chapterNav.style.bottom = '20px';
-            chapterNav.style.top = 'auto';
-            chapterNav.style.transform = 'none';
-            chapterNav.style.zIndex = '1000';
-        }
-
-        // 调整联系按钮位置
-        const contactButton = document.querySelector('.contact-button');
-        if (contactButton) {
-            contactButton.style.right = '10px';
-            contactButton.style.bottom = '20px';
-        }
-
-        // 调整返回顶部按钮位置
-        const backToTop = document.getElementById('backToTop');
-        if (backToTop) {
-            backToTop.style.right = '10px';
-            backToTop.style.bottom = '80px';
-        }
-
-        // 优化模态框在移动端的显示
-        const modalContents = document.querySelectorAll('.download-modal-content, .template-modal-content, .chapter-list');
-        modalContents.forEach(content => {
-            content.style.width = '95%';
-            content.style.margin = '20px auto';
-            content.style.maxHeight = '80vh';
-            content.style.overflow = 'auto';
-        });
-
-        // 优化按钮组在移动端的显示
-        const buttonGroup = document.querySelector('.button-group');
-        if (buttonGroup) {
-            buttonGroup.style.flexDirection = 'column';
-            buttonGroup.style.gap = '10px';
-        }
-
-        // 添加触摸滑动支持
-        let touchStartY = 0;
-        let touchEndY = 0;
-
-        document.addEventListener('touchstart', function(e) {
-            touchStartY = e.touches[0].clientY;
-        }, false);
-
-        document.addEventListener('touchend', function(e) {
-            touchEndY = e.changedTouches[0].clientY;
-            handleSwipe();
-        }, false);
-
-        function handleSwipe() {
-            const swipeDistance = touchEndY - touchStartY;
-            // 向上滑动超过50px时显示返回顶部按钮
-            if (swipeDistance < -50 && window.scrollY > 300) {
-                backToTop.classList.add('show');
-            }
-            // 向下滑动超过50px时隐藏返回顶部按钮
-            else if (swipeDistance > 50) {
-                backToTop.classList.remove('show');
-            }
-        }
-
-        // 优化搜索框在移动端的体验
+        // 防止页面弹跳
+        document.documentElement.style.height = '100%';
+        document.body.style.height = '100%';
+        document.body.style.overscrollBehavior = 'none';
+        
+        // 处理搜索框焦点
         const searchInput = document.getElementById('videoSearch');
         if (searchInput) {
-            // 点击搜索框时自动滚动到可见区域
-            searchInput.addEventListener('focus', function() {
+            const handleFocus = debounce(() => {
                 setTimeout(() => {
-                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    window.scrollTo(0, searchInput.offsetTop - 10);
                 }, 300);
-            });
+            }, 100);
 
-            // 添加清除按钮
-            const clearButton = document.createElement('button');
-            clearButton.className = 'search-clear';
-            clearButton.innerHTML = '×';
-            clearButton.style.display = 'none';
-            searchInput.parentNode.appendChild(clearButton);
-
-            searchInput.addEventListener('input', function() {
-                clearButton.style.display = this.value ? 'block' : 'none';
-            });
-
-            clearButton.addEventListener('click', function() {
-                searchInput.value = '';
-                searchInput.dispatchEvent(new Event('input'));
-                this.style.display = 'none';
-            });
+            searchInput.addEventListener('focus', handleFocus);
         }
 
-        // 优化视频播放器控件大小
-        const players = document.querySelectorAll('.plyr__video-embed');
-        players.forEach(player => {
-            player.style.fontSize = '14px';
-        });
-
-        // 处理键盘弹出时的布局问题
-        const originalHeight = window.innerHeight;
-        window.addEventListener('resize', function() {
-            if (window.innerHeight < originalHeight) {
-                // 键盘弹出时
-                document.body.style.height = window.innerHeight + 'px';
+        // 优化滚动处理
+        const handleScroll = throttle(() => {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
             } else {
-                // 键盘收起时
-                document.body.style.height = '';
+                backToTop.classList.remove('show');
             }
-        });
+        }, 100);
+
+        window.addEventListener('scroll', handleScroll);
+
+        // 优化返回顶部按钮点击
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+            const scrollToTop = throttle(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 500);
+
+            backToTop.addEventListener('click', scrollToTop);
+        }
+
+        // 处理模态框
+        const handleModal = (modalId, btnId, closeClass) => {
+            const modal = document.getElementById(modalId);
+            const btn = document.getElementById(btnId);
+            const close = modal.querySelector(`.${closeClass}`);
+
+            const showModal = debounce(() => {
+                modal.classList.add('show');
+                document.body.style.position = 'fixed';
+                document.body.style.width = '100%';
+                document.body.style.top = `-${window.scrollY}px`;
+            }, 100);
+
+            const hideModal = debounce(() => {
+                modal.classList.remove('show');
+                const scrollY = document.body.style.top;
+                document.body.style.position = '';
+                document.body.style.width = '';
+                document.body.style.top = '';
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }, 100);
+
+            btn.addEventListener('click', showModal);
+            close.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) hideModal();
+            });
+        };
+
+        // 初始化模态框
+        handleModal('downloadModal', 'downloadBtn', 'download-modal-close');
+        handleModal('templateModal', 'templateBtn', 'template-modal-close');
+
+        // 处理触摸滑动
+        let touchStartY = 0;
+        const handleTouchStart = throttle((e) => {
+            touchStartY = e.touches[0].clientY;
+        }, 100);
+
+        const handleTouchEnd = throttle((e) => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const swipeDistance = touchEndY - touchStartY;
+            const backToTop = document.getElementById('backToTop');
+            
+            if (swipeDistance < -50 && window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else if (swipeDistance > 50) {
+                backToTop.classList.remove('show');
+            }
+        }, 100);
+
+        document.addEventListener('touchstart', handleTouchStart);
+        document.addEventListener('touchend', handleTouchEnd);
     }
 }); 
