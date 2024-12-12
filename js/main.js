@@ -166,4 +166,58 @@ document.addEventListener('DOMContentLoaded', function() {
             behavior: 'smooth'
         });
     });
+});
+
+// 下载模态框功能
+document.addEventListener('DOMContentLoaded', function() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    const downloadModal = document.getElementById('downloadModal');
+    const downloadModalClose = document.querySelector('.download-modal-close');
+
+    // 打开模态框
+    downloadBtn.addEventListener('click', function() {
+        downloadModal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
+    });
+
+    // 关闭模态框
+    downloadModalClose.addEventListener('click', function() {
+        downloadModal.classList.remove('show');
+        document.body.style.overflow = '';
+    });
+
+    // 点击模态框外部关闭
+    downloadModal.addEventListener('click', function(e) {
+        if (e.target === downloadModal) {
+            downloadModal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    });
+});
+
+// 模板模态框功能
+document.addEventListener('DOMContentLoaded', function() {
+    const templateBtn = document.getElementById('templateBtn');
+    const templateModal = document.getElementById('templateModal');
+    const templateModalClose = document.querySelector('.template-modal-close');
+
+    // 打开模态框
+    templateBtn.addEventListener('click', function() {
+        templateModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    });
+
+    // 关闭模态框
+    templateModalClose.addEventListener('click', function() {
+        templateModal.classList.remove('show');
+        document.body.style.overflow = '';
+    });
+
+    // 点击模态框外部关闭
+    templateModal.addEventListener('click', function(e) {
+        if (e.target === templateModal) {
+            templateModal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    });
 }); 

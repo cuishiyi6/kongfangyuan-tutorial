@@ -17,15 +17,93 @@
 <body>
     <h1>孔方源智慧社区平台视频教程</h1>
 
-    <!-- 添加新的下载区域 -->
+    <!-- 修改下载区域 -->
     <div class="download-section">
-        <p class="download-desc">在观看视频教程之前，建议先下载使用手册，以便更好地理解操作流程</p>
-        <a href="./docs/孔方源智慧社区平台使用手册.docx" download class="download-btn">
-            <svg class="download-icon" viewBox="0 0 24 24" width="24" height="24">
-                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-            </svg>
-            下载使用说明文档
-        </a>
+        <div class="button-group">
+            <button class="download-btn" id="downloadBtn">
+                <svg class="download-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                下载使用手册
+            </button>
+            <button class="template-btn" id="templateBtn">
+                <svg class="template-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
+                </svg>
+                导入数据模板
+            </button>
+        </div>
+        <p class="download-desc">在观看视频教程之前，建议先下载使用手册和数据模板，以便更好地理解操作流程</p>
+    </div>
+
+    <!-- 添加下载模态框 -->
+    <div class="download-modal" id="downloadModal">
+        <div class="download-modal-content">
+            <span class="download-modal-close">&times;</span>
+            <h3>选择要下载的文档</h3>
+            <div class="download-list">
+                <a href="./docs/孔方源智慧社区平台使用手册.docx" download class="download-item">
+                    <svg class="doc-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
+                    </svg>
+                    <div class="download-item-info">
+                        <span class="download-item-title">智慧社区平台使用手册</span>
+                        <span class="download-item-desc">平台功能完整使用说明</span>
+                    </div>
+                    <span class="download-item-action">下载</span>
+                </a>
+                <a href="./docs/使用APP或小程序绑定小区和房间操作步骤.docx" download class="download-item">
+                    <svg class="doc-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
+                    </svg>
+                    <div class="download-item-info">
+                        <span class="download-item-title">APP/小程序绑定操作步骤</span>
+                        <span class="download-item-desc">手机端使用指南</span>
+                    </div>
+                    <span class="download-item-action">下载</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加模板下载模态框 -->
+    <div class="template-modal" id="templateModal">
+        <div class="template-modal-content">
+            <span class="template-modal-close">&times;</span>
+            <h3>选择数据导入模板</h3>
+            <div class="template-list">
+                <a href="./templates/楼栋单元房间导入模板.xls" download class="template-item">
+                    <svg class="excel-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
+                    </svg>
+                    <div class="template-item-info">
+                        <span class="template-item-title">楼栋单元房间导入模板</span>
+                        <span class="template-item-desc">用于批量导入小区房间信息</span>
+                    </div>
+                    <span class="template-item-action">下载</span>
+                </a>
+                <a href="./templates/业主数据导入模板.xls" download class="template-item">
+                    <svg class="excel-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
+                    </svg>
+                    <div class="template-item-info">
+                        <span class="template-item-title">业主导入模板</span>
+                        <span class="template-item-desc">用于批量导入业主信息</span>
+                    </div>
+                    <span class="template-item-action">下载</span>
+                </a>
+                <a href="./templates/车位数据导入模板.xlsx" download class="template-item">
+                    <svg class="excel-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
+                    </svg>
+                    <div class="template-item-info">
+                        <span class="template-item-title">车位导入模板</span>
+                        <span class="template-item-desc">用于批量导入车位信息</span>
+                    </div>
+                    <span class="template-item-action">下载</span>
+                </a>
+            </div>
+        </div>
     </div>
 
     <!-- 在下载区域后添加 -->
@@ -59,18 +137,6 @@
 
     <!-- 视频容器 -->
     <div id="videoContainer"></div>
-
-    <!-- 在联系方式栏之前添加弹窗 -->
-    <div class="modal" id="wechatModal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h3>微信客服</h3>
-            <div class="qr-code">
-                <img src="./image/qr-code.svg" alt="微信二维码">
-            </div>
-            <p>扫描二维码添加客服微信</p>
-        </div>
-    </div>
 
     <!-- 添加右侧联系电话按钮 -->
     <a href="tel:4009999733" class="contact-button">
