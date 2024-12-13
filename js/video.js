@@ -29,7 +29,13 @@ function initializePlayers() {
             blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
             previewThumbnails: { enabled: false },
             storage: { enabled: true, key: 'plyr' },
-            keyboard: { focused: true, global: false }
+            keyboard: { focused: true, global: false },
+            fullscreen: {
+                enabled: true,
+                fallback: true,
+                iosNative: true // 启用 iOS 原生全屏
+            },
+            ratio: '16:9'
         });
 
         // 加载保存的播放进度
@@ -49,6 +55,55 @@ function initializePlayers() {
         plyrInstance.on('play', () => {
             player.focus();
         });
+
+        // 监听全屏变化
+        plyrInstance.on('enterfullscreen', () => {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 强制横屏
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(() => {
+                        // 某些设备可能不支持锁定方向
+                        console.log('Orientation lock not supported');
+                    });
+                }
+                // 设置视频容器样式以适应横屏
+                player.closest('.video-container').style.height = '100%';
+                player.style.height = '100vh';
+            }
+        });
+
+        // 退出全屏时恢复
+        plyrInstance.on('exitfullscreen', () => {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 解除横屏锁定
+                if (screen.orientation && screen.orientation.unlock) {
+                    screen.orientation.unlock();
+                }
+                // 恢复原始样式
+                player.closest('.video-container').style.height = '';
+                player.style.height = '';
+            }
+        });
+
+        // 处理 iOS 的特殊情况
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            player.setAttribute('playsinline', 'true');
+            player.setAttribute('webkit-playsinline', 'true');
+            
+            // 添加全屏时的样式
+            const style = document.createElement('style');
+            style.textContent = `
+                video::-webkit-media-controls-fullscreen-button {
+                    display: flex !important;
+                }
+                .plyr--fullscreen-active video {
+                    object-fit: contain !important;
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
 
         return plyrInstance;
     });

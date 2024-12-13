@@ -1,75 +1,94 @@
 /* 视频容器样式 */
 .video-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
     margin: 30px 0;
-    padding: 20px 30px 30px;
-    background: #fff;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
-    position: relative;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
-.video-container:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+/* 移动端视频播放器样式优化 */
+@media (max-width: 768px) {
+    .plyr--fullscreen-active {
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    .plyr--fullscreen-active video {
+        object-fit: contain !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* 强制横屏时的样式 */
+    @media screen and (orientation: landscape) {
+        .plyr--fullscreen-active {
+            width: 100vw !important;
+            height: 100vh !important;
+        }
+
+        .plyr--fullscreen-active .plyr__video-wrapper {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+        }
+    }
+
+    /* iOS 设备的特殊处理 */
+    .plyr--ios-native-fullscreen-active {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
 }
 
 /* 标题容器样式 */
 .title-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 25px;
-    text-align: center;
+    gap: 15px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
 }
 
-.video-container h3 {
-    color: #2c3e50;
-    margin: 0;
-    font-size: 22px;
-    font-weight: 500;
-    padding-left: 12px;
-}
-
-/* 视频序号标记 */
 .video-number {
-    width: 45px;
-    height: 45px;
+    width: 32px;
+    height: 32px;
     background: #409EFF;
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
-/* 视频播放器样式 */
-.video-player {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    background: #000;
-    aspect-ratio: 16 / 9;
+.title-container h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #2c3e50;
+    font-weight: 500;
 }
 
-/* 加载动画 */
+/* 视频加载动画 */
 .video-loading {
+    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    border: 3px solid #f3f3f3;
-    border-top: 3px solid #409EFF;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #409EFF;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    display: none;
 }
 
 @keyframes spin {
@@ -77,34 +96,68 @@
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
-    .video-container {
-        padding: 15px;
-    }
-    
-    .video-container h3 {
-        font-size: 18px;
-    }
-}
-
-/* 可访问性 */
-.video-container:focus-within {
-    outline: 2px solid #409EFF;
-}
-
-.video-progress {
-    width: 100%;
-    height: 4px;
-    background: #f0f2f5;
-    margin-top: 10px;
-    border-radius: 2px;
+/* Plyr播放器自定义样式 */
+.plyr--video {
+    border-radius: 0 0 12px 12px;
     overflow: hidden;
 }
 
-.progress-bar {
-    height: 100%;
+.plyr--full-ui input[type=range] {
+    color: #409EFF;
+}
+
+.plyr__control--overlaid {
+    background: rgba(64, 158, 255, 0.8);
+}
+
+.plyr--video .plyr__control:hover {
     background: #409EFF;
-    width: 0;
-    transition: width 0.2s ease;
+}
+
+.plyr--full-ui input[type=range]::-webkit-slider-thumb {
+    background: #409EFF;
+}
+
+.plyr--full-ui input[type=range]::-moz-range-thumb {
+    background: #409EFF;
+}
+
+.plyr--full-ui input[type=range]::-ms-thumb {
+    background: #409EFF;
+}
+
+/* 移动端全屏优化 */
+@media (max-width: 768px) {
+    .video-container {
+        margin: 15px 0;
+    }
+
+    .title-container {
+        padding: 12px 15px;
+    }
+
+    .video-number {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .title-container h3 {
+        font-size: 14px;
+    }
+
+    /* 全屏时隐藏不必要的元素 */
+    .plyr--fullscreen-active .title-container,
+    .plyr--fullscreen-active .video-loading {
+        display: none;
+    }
+
+    /* 全屏时的控件大小调整 */
+    .plyr--fullscreen-active .plyr__controls {
+        padding: 15px !important;
+    }
+
+    .plyr--fullscreen-active .plyr__control {
+        padding: 10px !important;
+    }
 } 
