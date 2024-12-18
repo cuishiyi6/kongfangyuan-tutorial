@@ -24,32 +24,45 @@ function initializePlayers() {
             ],
             settings: ['quality', 'speed'],
             speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
+<<<<<<< HEAD
             loadSprite: false,
             iconUrl: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg',
             blankVideo: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/blank.mp4',
             preload: 'metadata',
             crossOrigin: 'anonymous'
+=======
+            loadSprite: true,
+            iconUrl: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg',
+            blankVideo: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/blank.mp4',
+            previewThumbnails: { enabled: false },
+            storage: { enabled: true, key: `plyr-${index}` },
+            keyboard: { focused: true, global: false },
+            tooltips: { controls: true, seek: true },
+            captions: { active: true, language: 'auto' },
+            hideControls: false,
+            resetOnEnd: false,
+            clickToPlay: true,
+            disableContextMenu: false
+>>>>>>> 1820cec7cc204b7150948b9e15e8af65353d3c94
         });
 
         // 添加错误处理
         handleVideoError(plyrInstance);
+<<<<<<< HEAD
+=======
+
+        // 初始化视频播放优化
+        optimizeVideoPlayback(plyrInstance);
+        
+        // 初始化播放记忆功能
+        initializeVideoPlayer(plyrInstance, index);
+
+>>>>>>> 1820cec7cc204b7150948b9e15e8af65353d3c94
         return plyrInstance;
     });
 
     // 处理加载状态
     handleVideoLoading(players);
-
-    // 添加播放控制
-    players.forEach((player, index) => {
-        player.on('play', () => {
-            // 暂停其他所有视频
-            players.forEach((otherPlayer, otherIndex) => {
-                if (otherIndex !== index && otherPlayer.playing) {
-                    otherPlayer.pause();
-                }
-            });
-        });
-    });
 }
 
 // 处理视频加载状态
@@ -66,3 +79,104 @@ function handleVideoLoading(players) {
 
 // 初始化页面时的播放器
 document.addEventListener('DOMContentLoaded', initializePlayers); 
+
+// 添加视频播放记忆功能
+function initializeVideoPlayer(player, videoId) {
+    // 读取上次播��位置
+    const lastTime = localStorage.getItem(`video-${videoId}-time`);
+    if (lastTime) {
+        player.currentTime = parseFloat(lastTime);
+    }
+
+    // 定期保存播放位置
+    player.on('timeupdate', () => {
+        localStorage.setItem(`video-${videoId}-time`, player.currentTime);
+    });
+
+    // 添加播放速度记忆
+    const lastSpeed = localStorage.getItem('video-playback-speed');
+    if (lastSpeed) {
+        player.speed = parseFloat(lastSpeed);
+    }
+}
+
+// 视频播放优化
+function optimizeVideoPlayback(player) {
+    // 自动选择合适的清晰度
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+        if (connection.effectiveType === '4g') {
+            player.quality = 720;
+        } else {
+            player.quality = 480;
+        }
+    }
+
+    // 添加播放错误处理
+    player.on('error', (error) => {
+        console.error('视频播放错误:', error);
+        const container = player.elements.container.closest('.video-container');
+        container.innerHTML += `
+            <div class="video-error">
+                <p>视频加载失败，请刷新页面重试</p>
+                <button onclick="location.reload()">刷新页面</button>
+            </div>
+        `;
+    });
+
+    // 添加缓冲提示
+    player.on('waiting', () => {
+        const container = player.elements.container.closest('.video-container');
+        container.classList.add('buffering');
+    });
+
+    player.on('playing', () => {
+        const container = player.elements.container.closest('.video-container');
+        container.classList.remove('buffering');
+    });
+}
+
+// 添加视频错误处理
+function handleVideoError(player) {
+    let retryCount = 0;
+    const maxRetries = 3;
+
+    player.on('error', async (error) => {
+        console.error('视频加载错误:', error);
+        
+        if (retryCount < maxRetries) {
+            retryCount++;
+            console.log(`视频加载失败，正在进行第 ${retryCount} 次重试...`);
+            
+            // 尝试重新加载视频
+            try {
+                await player.source(player.source);
+            } catch (e) {
+                console.error('重试失败:', e);
+            }
+        } else {
+            const container = player.elements.container.closest('.video-container');
+            const errorElement = document.createElement('div');
+            errorElement.className = 'video-error';
+            errorElement.innerHTML = `
+                <p>视频加载失败，请检查网络连接后重试</p>
+                <button onclick="location.reload()">重新加载</button>
+                <a href="${player.source}" download class="download-fallback">
+                    下载视频
+                </a>
+            `;
+            container.appendChild(errorElement);
+        }
+    });
+
+    // 添加加载状态监听
+    player.on('loadstart', () => {
+        const container = player.elements.container.closest('.video-container');
+        container.classList.add('loading');
+    });
+
+    player.on('canplay', () => {
+        const container = player.elements.container.closest('.video-container');
+        container.classList.remove('loading');
+    });
+} 

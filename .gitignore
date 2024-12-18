@@ -18,3 +18,15 @@ npm-debug.log*
 # 临时文件
 .tmp/
 .temp/
+<<<<<<< HEAD
+=======
+
+# 构建输出
+dist/
+build/
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+>>>>>>> 1820cec7cc204b7150948b9e15e8af65353d3c94

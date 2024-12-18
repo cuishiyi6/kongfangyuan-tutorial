@@ -1,0 +1,356 @@
+/* 添加全局过渡效果 */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 主题切换按钮样式 */
+.theme-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 4px;
+    z-index: 1000;
+    background: var(--theme-switcher-bg);
+    padding: 4px;
+    border-radius: 30px;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    transform: translateZ(0);
+}
+
+.theme-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--theme-btn-bg);
+    color: var(--theme-btn-color);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 添加涟漪效果 */
+.theme-btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--theme-btn-color);
+    opacity: 0;
+    border-radius: 50%;
+    transform: scale(2);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.theme-btn:active::after {
+    opacity: 0.1;
+    transform: scale(0);
+    transition: 0s;
+}
+
+.theme-btn:hover {
+    background: var(--theme-btn-hover-bg);
+    transform: translateY(-2px);
+}
+
+.theme-btn.active {
+    background: var(--theme-btn-active-bg);
+    color: var(--theme-btn-active-color);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.theme-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+}
+
+.theme-btn:hover svg {
+    transform: rotate(12deg);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .theme-switcher {
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        padding: 3px;
+    }
+
+    .theme-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .theme-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* 明亮主题 */
+:root {
+    --primary-color: #409EFF;
+    --success-color: #67C23A;
+    --text-color: #2c3e50;
+    --text-color-secondary: #606266;
+    --bg-color: #f4f6f9;
+    --bg-color-secondary: #fff;
+    --border-color: #eee;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    
+    --theme-switcher-bg: #fff;
+    --theme-btn-bg: #f4f6f9;
+    --theme-btn-color: #606266;
+    --theme-btn-hover-bg: #e8f4ff;
+    --theme-btn-active-bg: #409EFF;
+    --theme-btn-active-color: #fff;
+    
+    /* 添加过渡变量 */
+    --theme-transition: background-color 0.3s ease,
+                       color 0.3s ease,
+                       border-color 0.3s ease,
+                       box-shadow 0.3s ease;
+    
+    /* 下载框主题变量 */
+    --download-bg: #f8f9fa;
+    --download-hover-bg: #f0f7ff;
+    --download-border: #eee;
+    --download-hover-border: #409EFF;
+    --download-icon-fill: #409EFF;
+    --download-text: #2c3e50;
+    --download-desc: #666;
+    --download-action-bg: #ecf5ff;
+    --download-action-color: #409EFF;
+    --download-action-hover-bg: #409EFF;
+    --download-action-hover-color: #fff;
+    
+    /* 下载按钮主题变量 */
+    --download-btn-bg: #409EFF;
+    --download-btn-color: #fff;
+    --download-btn-hover-bg: #66b1ff;
+    --download-btn-shadow: rgba(64, 158, 255, 0.3);
+    
+    /* 模板按钮主题变量 */
+    --template-btn-bg: #67C23A;
+    --template-btn-color: #fff;
+    --template-btn-hover-bg: #85ce61;
+    --template-btn-shadow: rgba(103, 194, 58, 0.3);
+    
+    /* 下载描述文字颜色 */
+    --download-section-desc: #606266;
+    
+    /* 字体相关变量 */
+    --font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    --font-size-base: 16px;
+    --font-size-small: 14px;
+    --font-size-large: 18px;
+    --line-height-base: 1.6;
+    --letter-spacing: 0.5px;
+    
+    /* 标题字体样式 */
+    --heading-font-family: 'Microsoft YaHei', sans-serif;
+    --heading-font-weight: 600;
+    --heading-line-height: 1.4;
+    --heading-letter-spacing: 0.5px;
+    --heading-color: #2c3e50;
+    
+    /* 联系按钮变量 */
+    --contact-btn-bg: #fff;
+    --contact-btn-hover-bg: #f8f9fa;
+    --contact-btn-text: #2c3e50;
+    --contact-btn-hover-text: #409EFF;
+    --contact-btn-shadow: rgba(0, 0, 0, 0.1);
+    --icon-filter: none;
+    
+    /* 章节目录主题变量 */
+    --chapter-btn-bg: #409EFF;
+    --chapter-btn-color: #fff;
+    --chapter-btn-hover-bg: #66b1ff;
+    --chapter-btn-shadow: rgba(64, 158, 255, 0.2);
+    
+    /* 章节列表样式 */
+    --chapter-list-bg: #fff;
+    --chapter-item-color: #2c3e50;
+    --chapter-item-hover-bg: #f0f7ff;
+    --chapter-item-hover-color: #409EFF;
+    --chapter-item-active-bg: #409EFF;
+    --chapter-item-active-color: #fff;
+    --chapter-close-color: #606266;
+    --chapter-close-hover-color: #409EFF;
+    
+    /* 模态框主题变量 */
+    --modal-bg: #fff;
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --modal-shadow: rgba(0, 0, 0, 0.15);
+    --modal-border: #eee;
+    --modal-close-color: #606266;
+    --modal-close-hover-bg: #f0f7ff;
+    --modal-close-hover-color: #409EFF;
+    --modal-title-color: #2c3e50;
+    
+    /* 列表项主题变量 */
+    --list-item-bg: #f8f9fa;
+    --list-item-hover-bg: #f0f7ff;
+    --list-item-border: #eee;
+    --list-item-hover-border: #409EFF;
+    --list-item-title: #2c3e50;
+    --list-item-desc: #606266;
+    --list-item-action-bg: #ecf5ff;
+    --list-item-action-color: #409EFF;
+    --list-item-action-hover-bg: #409EFF;
+    --list-item-action-hover-color: #fff;
+}
+
+/* 暗黑主题 */
+[data-theme="dark"] {
+    --primary-color: #79bbff;
+    --success-color: #85ce61;
+    --text-color: #e5eaf3;
+    --text-color-secondary: #a3a6ad;
+    --bg-color: #1a1a1a;
+    --bg-color-secondary: #2c2c2c;
+    --border-color: #4c4c4c;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    
+    --theme-switcher-bg: #2c2c2c;
+    --theme-btn-bg: #1a1a1a;
+    --theme-btn-color: #a3a6ad;
+    --theme-btn-hover-bg: #3a3a3a;
+    --theme-btn-active-bg: #79bbff;
+    --theme-btn-active-color: #1a1a1a;
+    
+    /* 下载框暗色主题 */
+    --download-bg: #2c2c2c;
+    --download-hover-bg: #3a3a3a;
+    --download-border: #4c4c4c;
+    --download-hover-border: #79bbff;
+    --download-icon-fill: #79bbff;
+    --download-text: #e5eaf3;
+    --download-desc: #a3a6ad;
+    --download-action-bg: #1a1a1a;
+    --download-action-color: #79bbff;
+    --download-action-hover-bg: #79bbff;
+    --download-action-hover-color: #1a1a1a;
+    
+    /* 下载按钮暗色主题 */
+    --download-btn-bg: #79bbff;
+    --download-btn-color: #1a1a1a;
+    --download-btn-hover-bg: #a0cfff;
+    --download-btn-shadow: rgba(121, 187, 255, 0.3);
+    
+    /* 模板按钮暗色主题 */
+    --template-btn-bg: #85ce61;
+    --template-btn-color: #1a1a1a;
+    --template-btn-hover-bg: #95d475;
+    --template-btn-shadow: rgba(133, 206, 97, 0.3);
+    
+    /* 下载描述文字颜色 */
+    --download-section-desc: #a3a6ad;
+    
+    /* 暗色主题字体调整 */
+    --font-weight-normal: 300;
+    --font-weight-medium: 400;
+    --font-weight-bold: 500;
+    --letter-spacing: 0.7px;
+    --heading-color: #e5eaf3;
+    --heading-font-weight: 500;
+    
+    /* 联系按钮暗色主题 */
+    --contact-btn-bg: #2c2c2c;
+    --contact-btn-hover-bg: #3a3a3a;
+    --contact-btn-text: #e5eaf3;
+    --contact-btn-hover-text: #79bbff;
+    --contact-btn-shadow: rgba(0, 0, 0, 0.3);
+    --icon-filter: brightness(0) invert(1);
+    
+    /* 章节目录暗色主题 */
+    --chapter-btn-bg: #79bbff;
+    --chapter-btn-color: #1a1a1a;
+    --chapter-btn-hover-bg: #a0cfff;
+    --chapter-btn-shadow: rgba(121, 187, 255, 0.3);
+    
+    /* 章节列表暗色样式 */
+    --chapter-list-bg: #2c2c2c;
+    --chapter-item-color: #e5eaf3;
+    --chapter-item-hover-bg: #3a3a3a;
+    --chapter-item-hover-color: #79bbff;
+    --chapter-item-active-bg: #79bbff;
+    --chapter-item-active-color: #1a1a1a;
+    --chapter-close-color: #a3a6ad;
+    --chapter-close-hover-color: #79bbff;
+    
+    /* 模态框暗色主题 */
+    --modal-bg: #2c2c2c;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+    --modal-shadow: rgba(0, 0, 0, 0.3);
+    --modal-border: #4c4c4c;
+    --modal-close-color: #a3a6ad;
+    --modal-close-hover-bg: #3a3a3a;
+    --modal-close-hover-color: #79bbff;
+    --modal-title-color: #e5eaf3;
+    
+    /* 列表项暗色主题 */
+    --list-item-bg: #1a1a1a;
+    --list-item-hover-bg: #3a3a3a;
+    --list-item-border: #4c4c4c;
+    --list-item-hover-border: #79bbff;
+    --list-item-title: #e5eaf3;
+    --list-item-desc: #a3a6ad;
+    --list-item-action-bg: #2c2c2c;
+    --list-item-action-color: #79bbff;
+    --list-item-action-hover-bg: #79bbff;
+    --list-item-action-hover-color: #1a1a1a;
+}
+
+/* 自动主题 */
+@media (prefers-color-scheme: dark) {
+    [data-theme="auto"] {
+        --primary-color: #79bbff;
+        --success-color: #85ce61;
+        --text-color: #e5eaf3;
+        --text-color-secondary: #a3a6ad;
+        --bg-color: #1a1a1a;
+        --bg-color-secondary: #2c2c2c;
+        --border-color: #4c4c4c;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+        
+        --theme-switcher-bg: #2c2c2c;
+        --theme-btn-bg: #1a1a1a;
+        --theme-btn-color: #a3a6ad;
+        --theme-btn-hover-bg: #3a3a3a;
+        --theme-btn-active-bg: #79bbff;
+        --theme-btn-active-color: #1a1a1a;
+    }
+} 
+
+/* 添加主题切换动画 */
+@keyframes themeSwitch {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.theme-switching {
+    animation: themeSwitch 0.3s ease;
+} 
