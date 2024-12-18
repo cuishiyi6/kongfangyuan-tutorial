@@ -35,7 +35,7 @@ function initializePlayers() {
     handleVideoLoading(players);
 }
 
-// 处理视频加载状态
+// 处理���频加载状态
 function handleVideoLoading(players) {
     players.forEach(player => {
         const container = player.elements.container.closest('.video-container');
@@ -116,7 +116,7 @@ function handleVideoError(player) {
         
         if (retryCount < maxRetries) {
             retryCount++;
-            console.log(`视频加载失败，正在进行第 ${retryCount} 次重试...`);
+            console.log(`视频加��失败，正在进行第 ${retryCount} 次重试...`);
             
             // 尝试重新加载视频
             try {
