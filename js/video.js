@@ -12,6 +12,7 @@ function initializePlayers() {
         const plyrInstance = new Plyr(player, {
             controls: [
                 'play-large',
+                'restart',
                 'play',
                 'progress',
                 'current-time',
@@ -23,88 +24,15 @@ function initializePlayers() {
             ],
             settings: ['quality', 'speed'],
             speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
-            quality: { default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240] },
-            loadSprite: true,
-            iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
-            blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
-            previewThumbnails: { enabled: false },
-            storage: { enabled: true, key: 'plyr' },
-            keyboard: { focused: true, global: false },
-            fullscreen: {
-                enabled: true,
-                fallback: true,
-                iosNative: true // 启用 iOS 原生全屏
-            },
-            ratio: '16:9'
+            loadSprite: false,
+            iconUrl: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg',
+            blankVideo: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/blank.mp4',
+            preload: 'metadata',
+            crossOrigin: 'anonymous'
         });
 
-        // 加载保存的播放进度
-        const savedTime = localStorage.getItem(`video-${index}-progress`);
-        if (savedTime) {
-            plyrInstance.on('ready', () => {
-                plyrInstance.currentTime = parseFloat(savedTime);
-            });
-        }
-
-        // 每5秒保存一次播放进度
-        plyrInstance.on('timeupdate', () => {
-            localStorage.setItem(`video-${index}-progress`, plyrInstance.currentTime);
-        });
-
-        // 播放时自动获得焦点
-        plyrInstance.on('play', () => {
-            player.focus();
-        });
-
-        // 监听全屏变化
-        plyrInstance.on('enterfullscreen', () => {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                // 强制横屏
-                if (screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock('landscape').catch(() => {
-                        // 某些设备可能不支持锁定方向
-                        console.log('Orientation lock not supported');
-                    });
-                }
-                // 设置视频容器样式以适应横屏
-                player.closest('.video-container').style.height = '100%';
-                player.style.height = '100vh';
-            }
-        });
-
-        // 退出全屏时恢复
-        plyrInstance.on('exitfullscreen', () => {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                // 解除横屏锁定
-                if (screen.orientation && screen.orientation.unlock) {
-                    screen.orientation.unlock();
-                }
-                // 恢复原始样式
-                player.closest('.video-container').style.height = '';
-                player.style.height = '';
-            }
-        });
-
-        // 处理 iOS 的特殊情况
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            player.setAttribute('playsinline', 'true');
-            player.setAttribute('webkit-playsinline', 'true');
-            
-            // 添加全屏时的样式
-            const style = document.createElement('style');
-            style.textContent = `
-                video::-webkit-media-controls-fullscreen-button {
-                    display: flex !important;
-                }
-                .plyr--fullscreen-active video {
-                    object-fit: contain !important;
-                    width: 100% !important;
-                    height: 100% !important;
-                }
-            `;
-            document.head.appendChild(style);
-        }
-
+        // 添加错误处理
+        handleVideoError(plyrInstance);
         return plyrInstance;
     });
 

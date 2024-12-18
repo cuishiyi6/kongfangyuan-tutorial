@@ -2,26 +2,71 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="description" content="孔方源智慧社区平台视频教程 - 学习如何使用和管理社区平台">
     <meta name="theme-color" content="#409EFF">
     <title>孔方源智慧社区平台视频教程</title>
     
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/video.css">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css" as="style">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.min.js" as="script">
+    <link rel="stylesheet" href="css/themes.css">
     
-    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.min.js"></script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net blob:; media-src 'self' blob: *; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="keywords" content="孔方源,智慧社区,物业管理,视频教程,使用指南">
+    <meta name="author" content="孔方源科技">
+    <meta property="og:title" content="孔方源智慧社区平台视频教程">
+    <meta property="og:description" content="孔方源智慧社区平台视频教程 - 学习如何使用和管理社区平台">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="prefetch" href="./video/A1.mp4">
+    <link rel="preload" href="video/A1.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg" as="image" type="image/svg+xml">
+    <style>
+        .plyr__control svg {
+            fill: currentColor;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .plyr__control--overlaid svg {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
+    <meta name="referrer" content="no-referrer">
 </head>
 <body>
     <h1>孔方源智慧社区平台视频教程</h1>
 
+    <div class="theme-switcher">
+        <button class="theme-btn" data-theme="light" aria-label="切换到明亮主题">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+            </svg>
+        </button>
+        <button class="theme-btn" data-theme="dark" aria-label="切换到暗黑主题">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+            </svg>
+        </button>
+        <button class="theme-btn" data-theme="auto" aria-label="跟随系统主题">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 22c5.52 0 10-4.48 10-10S17.52 2 12 2 2 6.48 2 12s4.48 10 10 10zm0-18c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9L7.1 5.69C8.45 4.63 10.15 4 12 4zM4 12c0-1.85.63-3.55 1.69-4.9l11.21 11.21C15.55 19.37 13.85 20 12 20c-4.42 0-8-3.58-8-8z"/>
+            </svg>
+        </button>
+    </div>
+
     <!-- 修改下载区域 -->
     <div class="download-section">
         <div class="button-group">
-            <button class="download-btn" id="downloadBtn">
-                <svg class="download-icon" viewBox="0 0 24 24" width="24" height="24">
+            <button class="download-btn" id="downloadBtn" aria-label="下载使用手册">
+                <svg class="download-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                 </svg>
                 下载使用手册
@@ -66,7 +111,7 @@
         </div>
     </div>
 
-    <!-- 添加模板下载模态框 -->
+    <!-- 添加模板下载态框 -->
     <div class="template-modal" id="templateModal">
         <div class="template-modal-content">
             <span class="template-modal-close">&times;</span>
@@ -126,19 +171,19 @@
         <div class="chapter-list">
             <span class="chapter-close">&times;</span>
             <a href="#video-1" data-video="1">1. 物业注册到孔方源平台</a>
-            <a href="#video-2" data-video="2">2. 登陆物业平台添加小区</a>
+            <a href="#video-2" data-video="2">2. 陆物业平台添加小区</a>
             <a href="#video-3" data-video="3">3. 小区添加楼栋、单元、房间</a>
             <a href="#video-4" data-video="4">4. 添加业主的两种方式</a>
             <a href="#video-5" data-video="5">5. 如何创建收费标准</a>
             <a href="#video-6" data-video="6">6. 房间绑定收费标准之后如何批量生成账单</a>
-            <a href="#video-7" data-video="7">7. 如何对业主账单进行收费</a>
+            <a href="#video-7" data-video="7">7. 如何对业主账单进行收</a>
         </div>
     </div>
 
     <!-- 视频容器 -->
     <div id="videoContainer"></div>
 
-    <!-- 替换原有的联系按钮 -->
+    <!-- 替换原有的系按钮 -->
     <div class="contact-buttons">
         <a href="tel:4009999733" class="contact-button">
             <img src="./image/phone.svg" alt="电话">
@@ -151,10 +196,63 @@
             <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
         </svg>
     </button>
+    <!-- 修改快捷键说明 -->
+    <div class="keyboard-shortcuts" id="keyboardShortcuts" aria-label="键盘快捷键说明">
+        <div class="shortcuts-content">
+            <div class="shortcuts-header">
+                <h3>键盘快捷���</h3>
+                <button class="shortcuts-close" id="closeShortcuts">&times;</button>
+            </div>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>空格</kbd>
+                    <span>播放/暂停</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>→</kbd>
+                    <span>快进</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>←</kbd>
+                    <span>快退</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>↑</kbd>
+                    <span>音量增加</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>↓</kbd>
+                    <span>音量减少</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>F</kbd>
+                    <span>全屏</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>M</kbd>
+                    <span>静音</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>?</kbd>
+                    <span>显示此帮助</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加快捷键按钮 -->
+    <button class="shortcuts-toggle" id="toggleShortcuts" aria-label="显示键盘快捷键">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/>
+        </svg>
+    </button>
 
     <script src="js/main.js"></script>
     <script src="js/video.js"></script>
     <script src="js/contact.js"></script>
     <script src="js/chapter.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/device.js"></script>
+    <script src="js/shortcuts.js"></script>
 </body>
 </html> 
