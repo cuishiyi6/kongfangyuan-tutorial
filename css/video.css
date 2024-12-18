@@ -8,6 +8,7 @@
     transition: all 0.3s ease;
     max-width: 1000px;
     position: relative;
+    overflow: hidden;
 }
 
 /* 视频播放器容器 */
@@ -15,25 +16,48 @@
     position: relative;
     padding-top: 56.25%; /* 16:9 比例 */
     width: 100%;
-}
-
-/* 视频播放器样式 */
-.plyr {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    background: #000;
     border-radius: 8px;
     overflow: hidden;
 }
 
-/* 控制栏样式优化 */
+/* 视频播放器样式 */
+.plyr {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* 大播放按钮样式 */
+.plyr__control--overlaid {
+    background: var(--primary-color) !important;
+    opacity: 0.9;
+    padding: 25px !important;
+    border: none;
+    transition: all 0.3s ease;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.plyr__control--overlaid svg {
+    width: 32px !important;
+    height: 32px !important;
+    fill: #fff;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+}
+
+/* 确保控件容器始终可见 */
 .plyr--video .plyr__controls {
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
     padding: 20px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
+/* 控件样式优化 */
 .plyr--video .plyr__control {
     background: transparent;
     color: #fff;
@@ -44,39 +68,11 @@
     background: var(--primary-color);
 }
 
-.plyr--video .plyr__control--overlaid {
-    background: var(--primary-color);
-    border: 0;
-    border-radius: 50%;
-    padding: 15px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0.9;
-}
-
-.plyr--video .plyr__control--overlaid:hover {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
-}
-
 /* 确保图标可见 */
 .plyr__control svg {
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
-}
-
-/* 大播放按钮样式 */
-.plyr__control--overlaid {
-    background: var(--primary-color) !important;
-    padding: 25px !important;
-}
-
-.plyr__control--overlaid svg {
-    left: 2px;
-    position: relative;
-    width: 32px;
-    height: 32px;
+    width: 18px !important;
+    height: 18px !important;
+    fill: currentColor;
 }
 
 /* 进度条样式优化 */
@@ -94,13 +90,6 @@
 .plyr--audio .plyr__control[aria-expanded='true'] {
     background: var(--primary-color);
     color: #fff;
-}
-
-/* 确保控件容器始终可见 */
-.plyr--video.plyr--hide-controls .plyr__controls {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
 }
 
 /* 标题容器样式 */
@@ -373,5 +362,25 @@
         .video-container {
             max-width: 90vh;
         }
+    }
+}
+
+/* 播放按钮悬停效果 */
+.plyr__control--overlaid:hover {
+    background: var(--primary-color) !important;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* 确保图标在暗色主题下可见 */
+[data-theme="dark"] .plyr__control svg {
+    fill: #fff;
+}
+
+/* 修复 iOS 上的图标显示 */
+@supports (-webkit-touch-callout: none) {
+    .plyr__control--overlaid {
+        -webkit-backdrop-filter: blur(0);
+        backdrop-filter: blur(0);
     }
 } 

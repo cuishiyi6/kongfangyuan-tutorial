@@ -17,13 +17,36 @@ function initializePlayers() {
                 'settings',
                 'fullscreen'
             ],
+            i18n: {
+                restart: '重新播放',
+                play: '播放',
+                pause: '暂停',
+                fastForward: '快进',
+                rewind: '快退',
+                settings: '设置',
+                mute: '静音',
+                unmute: '取消静音',
+                enterFullscreen: '全屏',
+                exitFullscreen: '退出全屏',
+                speed: '播放速度',
+                normal: '正常'
+            },
             settings: ['quality', 'speed'],
             speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
-            loadSprite: false,
-            iconUrl: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg',
-            blankVideo: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/blank.mp4',
+            loadSprite: true,
+            iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+            blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
             preload: 'metadata',
-            crossOrigin: 'anonymous'
+            ratio: '16:9',
+            fullscreen: {
+                enabled: true,
+                fallback: true,
+                iosNative: true
+            },
+            resetOnEnd: false,
+            clickToPlay: true,
+            hideControls: false,
+            keyboard: { focused: true, global: false }
         });
 
         // 添加错误处理
@@ -35,7 +58,7 @@ function initializePlayers() {
     handleVideoLoading(players);
 }
 
-// 处理���频加载状态
+// 处理视频加载状态
 function handleVideoLoading(players) {
     players.forEach(player => {
         const container = player.elements.container.closest('.video-container');
@@ -116,7 +139,7 @@ function handleVideoError(player) {
         
         if (retryCount < maxRetries) {
             retryCount++;
-            console.log(`视频加��失败，正在进行第 ${retryCount} 次重试...`);
+            console.log(`视频加载失败，正在进行第 ${retryCount} 次重试...`);
             
             // 尝试重新加载视频
             try {
