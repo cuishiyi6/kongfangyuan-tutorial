@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/themes.css">
     
     <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.min.js"></script>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net blob:; media-src 'self' blob:; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net blob:; media-src 'self' blob: *; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="keywords" content="孔方源,智慧社区,物业管理,视频教程,使用指南">
     <meta name="author" content="孔方源科技">
@@ -39,6 +39,7 @@
             height: 32px;
         }
     </style>
+    <meta name="referrer" content="no-referrer">
 </head>
 <body>
     <h1>孔方源智慧社区平台视频教程</h1>
@@ -94,7 +95,7 @@
                         <span class="download-item-title">智慧社区平台使用手册</span>
                         <span class="download-item-desc">平台功能完整使用说明</span>
                     </div>
-                    <span class="download-item-action">下载</span>
+                    <span class="download-item-action">下���</span>
                 </a>
                 <a href="./docs/使用APP或小程序绑定小区和房间操作步骤.docx" download class="download-item">
                     <svg class="doc-icon" viewBox="0 0 24 24" width="24" height="24">
@@ -170,7 +171,7 @@
         <div class="chapter-list">
             <span class="chapter-close">&times;</span>
             <a href="#video-1" data-video="1">1. 物业注册到孔方源平台</a>
-            <a href="#video-2" data-video="2">2. 登陆物业平台添加小区</a>
+            <a href="#video-2" data-video="2">2. ��陆物业平台添加小区</a>
             <a href="#video-3" data-video="3">3. 小区添加楼栋、单元、房间</a>
             <a href="#video-4" data-video="4">4. 添加业主的两种方式</a>
             <a href="#video-5" data-video="5">5. 如何创建收费标准</a>
@@ -240,7 +241,7 @@
     </div>
 
     <!-- 添加快捷键按钮 -->
-    <button class="shortcuts-toggle" id="toggleShortcuts" aria-label="显��键盘快捷键">
+    <button class="shortcuts-toggle" id="toggleShortcuts" aria-label="显示键盘快捷键">
         <svg viewBox="0 0 24 24" width="24" height="24">
             <path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/>
         </svg>

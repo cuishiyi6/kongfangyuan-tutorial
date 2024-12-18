@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', initializePlayers);
 
 // 添加视频播放记忆功能
 function initializeVideoPlayer(player, videoId) {
-    // 读取上次播放位置
+    // 读取上次播��位置
     const lastTime = localStorage.getItem(`video-${videoId}-time`);
     if (lastTime) {
         player.currentTime = parseFloat(lastTime);
@@ -127,15 +127,45 @@ function optimizeVideoPlayback(player) {
 
 // 添加视频错误处理
 function handleVideoError(player) {
-    player.on('error', (event) => {
+    let retryCount = 0;
+    const maxRetries = 3;
+
+    player.on('error', async (error) => {
+        console.error('视频加载错误:', error);
+        
+        if (retryCount < maxRetries) {
+            retryCount++;
+            console.log(`视频加载失败，正在进行第 ${retryCount} 次重试...`);
+            
+            // 尝试重新加载视频
+            try {
+                await player.source(player.source);
+            } catch (e) {
+                console.error('重试失败:', e);
+            }
+        } else {
+            const container = player.elements.container.closest('.video-container');
+            const errorElement = document.createElement('div');
+            errorElement.className = 'video-error';
+            errorElement.innerHTML = `
+                <p>视频加载失败，请检查网络连接后重试</p>
+                <button onclick="location.reload()">重新加载</button>
+                <a href="${player.source}" download class="download-fallback">
+                    下载视频
+                </a>
+            `;
+            container.appendChild(errorElement);
+        }
+    });
+
+    // 添加加载状态监听
+    player.on('loadstart', () => {
         const container = player.elements.container.closest('.video-container');
-        const errorElement = document.createElement('div');
-        errorElement.className = 'video-error';
-        errorElement.innerHTML = `
-            <p>视频加载失败，请检查网络连接后重试</p>
-            <button onclick="location.reload()">重新加载</button>
-        `;
-        container.appendChild(errorElement);
-        console.error('视频加载错误:', event);
+        container.classList.add('loading');
+    });
+
+    player.on('canplay', () => {
+        const container = player.elements.container.closest('.video-container');
+        container.classList.remove('loading');
     });
 } 

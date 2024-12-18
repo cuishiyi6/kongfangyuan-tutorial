@@ -461,7 +461,7 @@ h1 {
     z-index: 1000;
 }
 
-/* ���系按钮样式优化 */
+/* 联系按钮样式优化 */
 .contact-button {
     display: flex;
     align-items: center;
@@ -1222,7 +1222,7 @@ h1 {
         touch-action: pan-y pinch-zoom;
     }
     
-    /* 优化触摸目标��小 */
+    /* 优化触摸目标大小 */
     .plyr__controls button {
         min-width: 44px;
         min-height: 44px;
@@ -1691,5 +1691,27 @@ h1, h2, h3, h4, h5, h6 {
     .template-item {
         padding: 12px;
     }
+}
+
+.video-container.loading .video-loading {
+    display: block;
+}
+
+.video-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
   
