@@ -3,37 +3,44 @@ const videoData = [
     {
         id: 1,
         title: "物业注册到孔方源平台",
-        file: "A1.mp4"
+        file: "video/A1.mp4",
+        poster: "image/posters/A1.jpg"
     },
     {
         id: 2,
         title: "登陆物业平台添加小区",
-        file: "A2.mp4"
+        file: "video/A2.mp4",
+        poster: "image/posters/A2.jpg"
     },
     {
         id: 3,
         title: "小区添加楼栋、单元、房间",
-        file: "A3.mp4"
+        file: "video/A3.mp4",
+        poster: "image/posters/A3.jpg"
     },
     {
         id: 4,
         title: "添加业主的两种方式",
-        file: "A4.mp4"
+        file: "video/A4.mp4",
+        poster: "image/posters/A4.jpg"
     },
     {
         id: 5,
         title: "如何创建收费标准",
-        file: "A5.mp4"
+        file: "video/A5.mp4",
+        poster: "image/posters/A5.jpg"
     },
     {
         id: 6,
         title: "房间绑定收费标准之后如何批量生成账单",
-        file: "A6.mp4"
+        file: "video/A6.mp4",
+        poster: "image/posters/A6.jpg"
     },
     {
         id: 7,
         title: "如何对业主账单进行收费",
-        file: "A7.mp4"
+        file: "video/A7.mp4",
+        poster: "image/posters/A7.jpg"
     }
 ];
 
@@ -49,15 +56,17 @@ function generateVideoHTML(videos = videoData) {
                     <div class="video-number">${video.id}</div>
                     <h3>A${video.id} - ${video.title}</h3>
                 </div>
-                <video 
-                    class="video-player plyr__video-embed" 
-                    playsinline 
-                    controls
-                    data-poster=""
-                >
-                    <source src="./video/${video.file}" type="video/mp4">
-                    您的浏览器不支持视频播放。
-                </video>
+                <div class="video-wrapper">
+                    <video 
+                        class="video-player" 
+                        playsinline 
+                        controls
+                        data-poster="${video.poster || ''}"
+                    >
+                        <source src="${video.file}" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
                 <div class="video-loading"></div>
             </div>
         `;
@@ -379,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('error', (event) => {
         if (event.target.tagName === 'LINK' || event.target.tagName === 'SCRIPT') {
             console.error('资源加载失败:', event.target.src || event.target.href);
-            // 可以在这里添加资源加载失败的降级处理
+            // 可以在这里添加资源加载失败降级处理
         }
     }, true);
 });

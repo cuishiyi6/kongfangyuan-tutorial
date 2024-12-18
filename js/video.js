@@ -12,6 +12,7 @@ function initializePlayers() {
         const plyrInstance = new Plyr(player, {
             controls: [
                 'play-large',
+                'restart',
                 'play',
                 'progress',
                 'current-time',
@@ -23,105 +24,34 @@ function initializePlayers() {
             ],
             settings: ['quality', 'speed'],
             speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
-            quality: { default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240] },
             loadSprite: true,
-            iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
-            blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
+            iconUrl: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg',
+            blankVideo: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/blank.mp4',
             previewThumbnails: { enabled: false },
-            storage: { enabled: true, key: 'plyr' },
+            storage: { enabled: true, key: `plyr-${index}` },
             keyboard: { focused: true, global: false },
-            fullscreen: {
-                enabled: true,
-                fallback: true,
-                iosNative: true // 启用 iOS 原生全屏
-            },
-            ratio: '16:9'
+            tooltips: { controls: true, seek: true },
+            captions: { active: true, language: 'auto' },
+            hideControls: false,
+            resetOnEnd: false,
+            clickToPlay: true,
+            disableContextMenu: false
         });
 
-        // 加载保存的播放进度
-        const savedTime = localStorage.getItem(`video-${index}-progress`);
-        if (savedTime) {
-            plyrInstance.on('ready', () => {
-                plyrInstance.currentTime = parseFloat(savedTime);
-            });
-        }
+        // 添加错误处理
+        handleVideoError(plyrInstance);
 
-        // 每5秒保存一次播放进度
-        plyrInstance.on('timeupdate', () => {
-            localStorage.setItem(`video-${index}-progress`, plyrInstance.currentTime);
-        });
-
-        // 播放时自动获得焦点
-        plyrInstance.on('play', () => {
-            player.focus();
-        });
-
-        // 监听全屏变化
-        plyrInstance.on('enterfullscreen', () => {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                // 强制横屏
-                if (screen.orientation && screen.orientation.lock) {
-                    screen.orientation.lock('landscape').catch(() => {
-                        // 某些设备可能不支持锁定方向
-                        console.log('Orientation lock not supported');
-                    });
-                }
-                // 设置视频容器样式以适应横屏
-                player.closest('.video-container').style.height = '100%';
-                player.style.height = '100vh';
-            }
-        });
-
-        // 退出全屏时恢复
-        plyrInstance.on('exitfullscreen', () => {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                // 解除横屏锁定
-                if (screen.orientation && screen.orientation.unlock) {
-                    screen.orientation.unlock();
-                }
-                // 恢复原始样式
-                player.closest('.video-container').style.height = '';
-                player.style.height = '';
-            }
-        });
-
-        // 处理 iOS 的特殊情况
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            player.setAttribute('playsinline', 'true');
-            player.setAttribute('webkit-playsinline', 'true');
-            
-            // 添加全屏时的样式
-            const style = document.createElement('style');
-            style.textContent = `
-                video::-webkit-media-controls-fullscreen-button {
-                    display: flex !important;
-                }
-                .plyr--fullscreen-active video {
-                    object-fit: contain !important;
-                    width: 100% !important;
-                    height: 100% !important;
-                }
-            `;
-            document.head.appendChild(style);
-        }
+        // 初始化视频播放优化
+        optimizeVideoPlayback(plyrInstance);
+        
+        // 初始化播放记忆功能
+        initializeVideoPlayer(plyrInstance, index);
 
         return plyrInstance;
     });
 
     // 处理加载状态
     handleVideoLoading(players);
-
-    // 添加播放控制
-    players.forEach((player, index) => {
-        player.on('play', () => {
-            // 暂停其他所有视频
-            players.forEach((otherPlayer, otherIndex) => {
-                if (otherIndex !== index && otherPlayer.playing) {
-                    otherPlayer.pause();
-                }
-            });
-        });
-    });
 }
 
 // 处理视频加载状态
@@ -157,4 +87,55 @@ function initializeVideoPlayer(player, videoId) {
     if (lastSpeed) {
         player.speed = parseFloat(lastSpeed);
     }
+}
+
+// 视频播放优化
+function optimizeVideoPlayback(player) {
+    // 自动选择合适的清晰度
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+        if (connection.effectiveType === '4g') {
+            player.quality = 720;
+        } else {
+            player.quality = 480;
+        }
+    }
+
+    // 添加播放错误处理
+    player.on('error', (error) => {
+        console.error('视频播放错误:', error);
+        const container = player.elements.container.closest('.video-container');
+        container.innerHTML += `
+            <div class="video-error">
+                <p>视频加载失败，请刷新页面重试</p>
+                <button onclick="location.reload()">刷新页面</button>
+            </div>
+        `;
+    });
+
+    // 添加缓冲提示
+    player.on('waiting', () => {
+        const container = player.elements.container.closest('.video-container');
+        container.classList.add('buffering');
+    });
+
+    player.on('playing', () => {
+        const container = player.elements.container.closest('.video-container');
+        container.classList.remove('buffering');
+    });
+}
+
+// 添加视频错误处理
+function handleVideoError(player) {
+    player.on('error', (event) => {
+        const container = player.elements.container.closest('.video-container');
+        const errorElement = document.createElement('div');
+        errorElement.className = 'video-error';
+        errorElement.innerHTML = `
+            <p>视频加载失败，请检查网络连接后重试</p>
+            <button onclick="location.reload()">重新加载</button>
+        `;
+        container.appendChild(errorElement);
+        console.error('视频加载错误:', event);
+    });
 } 

@@ -44,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.setAttribute('data-theme', theme);
         updateActiveButton(theme);
         
+        // 更新下载框样式
+        updateDownloadStyles(theme);
+        
+        // 更新模态框样式
+        updateModalStyles(theme);
+        
         // 移除过渡动画
         setTimeout(() => {
             document.documentElement.classList.remove('theme-switching');
@@ -93,5 +99,31 @@ function switchTheme(theme) {
         setTimeout(() => {
             document.documentElement.classList.remove('theme-switching');
         }, 300);
+    });
+} 
+
+// 更新下载框样式
+function updateDownloadStyles(theme) {
+    const isDark = theme === 'dark' || 
+        (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    
+    // 更新图标颜色
+    const icons = document.querySelectorAll('.doc-icon, .excel-icon');
+    icons.forEach(icon => {
+        icon.style.transition = 'fill 0.3s ease';
+        icon.style.fill = isDark ? '#79bbff' : '#409EFF';
+    });
+} 
+
+// 更新模态框样式
+function updateModalStyles(theme) {
+    const isDark = theme === 'dark' || 
+        (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    
+    // 更新图标颜色
+    const icons = document.querySelectorAll('.doc-icon, .excel-icon');
+    icons.forEach(icon => {
+        icon.style.transition = 'fill 0.3s ease';
+        icon.style.fill = isDark ? '#79bbff' : '#409EFF';
     });
 } 

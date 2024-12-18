@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="description" content="孔方源智慧社区平台视频教程 - 学习如何使用和管理社区平台">
     <meta name="theme-color" content="#409EFF">
     <title>孔方源智慧社区平台视频教程</title>
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/themes.css">
     
     <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.min.js"></script>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.plyr.io; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://cdn.plyr.io;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net blob:; media-src 'self' blob:; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="keywords" content="孔方源,智慧社区,物业管理,视频教程,使用指南">
     <meta name="author" content="孔方源科技">
@@ -25,6 +25,20 @@
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="prefetch" href="./video/A1.mp4">
+    <link rel="preload" href="video/A1.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg" as="image" type="image/svg+xml">
+    <style>
+        .plyr__control svg {
+            fill: currentColor;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .plyr__control--overlaid svg {
+            width: 32px;
+            height: 32px;
+        }
+    </style>
 </head>
 <body>
     <h1>孔方源智慧社区平台视频教程</h1>
@@ -72,7 +86,7 @@
             <span class="download-modal-close">&times;</span>
             <h3>选择要下载的文档</h3>
             <div class="download-list">
-                <a href="./docs/孔方��智慧社区平台使用手册.docx" download class="download-item">
+                <a href="./docs/孔方源智慧社区平台使用手册.docx" download class="download-item">
                     <svg class="doc-icon" viewBox="0 0 24 24" width="24" height="24">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
                     </svg>
@@ -96,7 +110,7 @@
         </div>
     </div>
 
-    <!-- 添加模板下载模态框 -->
+    <!-- 添加模板下载态框 -->
     <div class="template-modal" id="templateModal">
         <div class="template-modal-content">
             <span class="template-modal-close">&times;</span>
@@ -181,19 +195,63 @@
             <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
         </svg>
     </button>
-    <!-- 添加快捷键说明 -->
-    <div class="keyboard-shortcuts" aria-label="键盘快捷键说明">
-        <kbd>空格</kbd> 播放/暂停
-        <kbd>→</kbd> 快进
-        <kbd>←</kbd> 快退
-        <kbd>↑</kbd> 音量增加
-        <kbd>↓</kbd> 音量减少
+    <!-- 修改快捷键说明 -->
+    <div class="keyboard-shortcuts" id="keyboardShortcuts" aria-label="键盘快捷键说明">
+        <div class="shortcuts-content">
+            <div class="shortcuts-header">
+                <h3>键盘快捷键</h3>
+                <button class="shortcuts-close" id="closeShortcuts">&times;</button>
+            </div>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>空格</kbd>
+                    <span>播放/暂停</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>→</kbd>
+                    <span>快进</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>←</kbd>
+                    <span>快退</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>↑</kbd>
+                    <span>音量增加</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>↓</kbd>
+                    <span>音量减少</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>F</kbd>
+                    <span>全屏</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>M</kbd>
+                    <span>静音</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>?</kbd>
+                    <span>显示此帮助</span>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- 添加快捷键按钮 -->
+    <button class="shortcuts-toggle" id="toggleShortcuts" aria-label="显��键盘快捷键">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+            <path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/>
+        </svg>
+    </button>
 
     <script src="js/main.js"></script>
     <script src="js/video.js"></script>
     <script src="js/contact.js"></script>
     <script src="js/chapter.js"></script>
     <script src="js/theme.js"></script>
+    <script src="js/device.js"></script>
+    <script src="js/shortcuts.js"></script>
 </body>
 </html> 
