@@ -2,5 +2,14 @@
   "name": "kfy-video-tutorial",
   "version": "1.64.0",
   "description": "孔方源智慧社区平台视频教程",
-  ...
+  "private": true,
+  "scripts": {
+    "start": "serve .",
+    "build": "echo 'No build required'"
+  },
+  "author": "孔方源",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
 } 
