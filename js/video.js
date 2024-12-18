@@ -1,5 +1,6 @@
 // 存储所有播放器实例
 let players = [];
+let currentPlayingPlayer = null;  // 添加当前播放的播放器引用
 
 // 初始化播放器函数
 function initializePlayers() {
@@ -33,8 +34,8 @@ function initializePlayers() {
             },
             settings: ['quality', 'speed'],
             speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
-            loadSprite: true,
-            iconUrl: 'https://cdn.plyr.io/3.7.8/plyr.svg',
+            loadSprite: false,
+            iconUrl: '',
             blankVideo: 'https://cdn.plyr.io/static/blank.mp4',
             preload: 'metadata',
             ratio: '16:9',
@@ -47,6 +48,32 @@ function initializePlayers() {
             clickToPlay: true,
             hideControls: false,
             keyboard: { focused: true, global: false }
+        });
+
+        // 添加播放事件监听
+        plyrInstance.on('play', () => {
+            // 如果有其他视频在播放，就暂停它
+            if (currentPlayingPlayer && currentPlayingPlayer !== plyrInstance) {
+                currentPlayingPlayer.pause();
+            }
+            // 更新当前播放的视频
+            currentPlayingPlayer = plyrInstance;
+        });
+
+        // 添加暂停事件监听
+        plyrInstance.on('pause', () => {
+            // 如果暂停的是当前播放的视频，清除引用
+            if (currentPlayingPlayer === plyrInstance) {
+                currentPlayingPlayer = null;
+            }
+        });
+
+        // 添加结束事件监听
+        plyrInstance.on('ended', () => {
+            // 视频播放结束时清除引用
+            if (currentPlayingPlayer === plyrInstance) {
+                currentPlayingPlayer = null;
+            }
         });
 
         // 添加错误处理

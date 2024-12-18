@@ -29,19 +29,39 @@
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg" as="image" type="image/svg+xml">
     <style>
         .plyr__control svg {
-            fill: currentColor;
-            width: 18px;
-            height: 18px;
+            fill: currentColor !important;
+            width: 18px !important;
+            height: 18px !important;
         }
         
         .plyr__control--overlaid svg {
-            width: 32px;
-            height: 32px;
+            width: 32px !important;
+            height: 32px !important;
         }
     </style>
     <meta name="referrer" content="no-referrer">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <svg style="display: none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <symbol id="plyr-play" viewBox="0 0 18 18">
+                <path d="M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z"/>
+            </symbol>
+            <symbol id="plyr-pause" viewBox="0 0 18 18">
+                <path d="M6 1H3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm6 0h-3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1z"/>
+            </symbol>
+            <symbol id="plyr-muted" viewBox="0 0 18 18">
+                <path d="M12.4 12.5l2.1-2.1 2.1 2.1 1.4-1.4L15.9 9 18 6.9l-1.4-1.4-2.1 2.1-2.1-2.1L11 6.9 13.1 9 11 11.1zM3.786 6.008H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"/>
+            </symbol>
+            <symbol id="plyr-volume" viewBox="0 0 18 18">
+                <path d="M15.6 3.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4C15.4 5.9 16 7.4 16 9c0 1.6-.6 3.1-1.8 4.3-.4.4-.4 1 0 1.4.2.2.5.3.7.3.3 0 .5-.1.7-.3C17.1 13.2 18 11.2 18 9s-.9-4.2-2.4-5.7z"/>
+                <path d="M11.282 5.282a.909.909 0 000 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 000 1.316c.145.145.636.262 1.018.156a.725.725 0 00.298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 00-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"/>
+            </symbol>
+            <symbol id="plyr-fullscreen" viewBox="0 0 18 18">
+                <path d="M10 3h3.6l-4 4L11 8.4l4-4v3.6h2V3h-7v2zm-8 12v-7h2v3.6l4-4L9.4 9l-4 4h3.6v2H2z"/>
+            </symbol>
+        </defs>
+    </svg>
 </head>
 <body>
     <h1>孔方源智慧社区平台视频教程</h1>
@@ -97,7 +117,7 @@
                         <span class="download-item-title">智慧社区平台使用手册</span>
                         <span class="download-item-desc">平台功能完整使用说明</span>
                     </div>
-                    <span class="download-item-action">下载</span>
+                    <span class="download-item-action">下���</span>
                 </a>
                 <a href="./docs/使用APP或小程序绑定小区和房间操作步骤.docx" download class="download-item">
                     <svg class="doc-icon" viewBox="0 0 24 24" width="24" height="24">
@@ -139,7 +159,7 @@
                     </div>
                     <span class="template-item-action">下载</span>
                 </a>
-                <a href="./templates/车位数据导��模板.xlsx" download class="template-item">
+                <a href="./templates/车位数据导入模板.xlsx" download class="template-item">
                     <svg class="excel-icon" viewBox="0 0 24 24" width="24" height="24">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/>
                     </svg>
