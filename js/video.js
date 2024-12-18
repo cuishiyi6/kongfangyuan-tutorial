@@ -3,11 +3,6 @@ let players = [];
 
 // 初始化播放器函数
 function initializePlayers() {
-    // 清除旧的播放器实例
-    players.forEach(player => player.destroy());
-    players = [];
-
-    // 初始化所有视频播放器
     players = Array.from(document.querySelectorAll('.video-player')).map((player, index) => {
         const plyrInstance = new Plyr(player, {
             controls: [
@@ -24,40 +19,15 @@ function initializePlayers() {
             ],
             settings: ['quality', 'speed'],
             speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
-<<<<<<< HEAD
             loadSprite: false,
             iconUrl: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg',
             blankVideo: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/blank.mp4',
             preload: 'metadata',
             crossOrigin: 'anonymous'
-=======
-            loadSprite: true,
-            iconUrl: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.svg',
-            blankVideo: 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/blank.mp4',
-            previewThumbnails: { enabled: false },
-            storage: { enabled: true, key: `plyr-${index}` },
-            keyboard: { focused: true, global: false },
-            tooltips: { controls: true, seek: true },
-            captions: { active: true, language: 'auto' },
-            hideControls: false,
-            resetOnEnd: false,
-            clickToPlay: true,
-            disableContextMenu: false
->>>>>>> 1820cec7cc204b7150948b9e15e8af65353d3c94
         });
 
         // 添加错误处理
         handleVideoError(plyrInstance);
-<<<<<<< HEAD
-=======
-
-        // 初始化视频播放优化
-        optimizeVideoPlayback(plyrInstance);
-        
-        // 初始化播放记忆功能
-        initializeVideoPlayer(plyrInstance, index);
-
->>>>>>> 1820cec7cc204b7150948b9e15e8af65353d3c94
         return plyrInstance;
     });
 
@@ -82,7 +52,7 @@ document.addEventListener('DOMContentLoaded', initializePlayers);
 
 // 添加视频播放记忆功能
 function initializeVideoPlayer(player, videoId) {
-    // 读取上次播��位置
+    // 读取上次播放位置
     const lastTime = localStorage.getItem(`video-${videoId}-time`);
     if (lastTime) {
         player.currentTime = parseFloat(lastTime);
