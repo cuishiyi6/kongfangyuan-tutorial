@@ -348,4 +348,69 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('touchstart', handleTouchStart);
         document.addEventListener('touchend', handleTouchEnd);
     }
-}); 
+});
+
+// 添加文件下载错误处理
+document.querySelectorAll('.download-item').forEach(item => {
+    item.addEventListener('click', async (e) => {
+        try {
+            // 下载处理逻辑
+        } catch (error) {
+            console.error('下载失败:', error);
+            alert('文件下载失败，请稍后重试');
+        }
+    });
+});
+
+// 添加全局错误处理
+window.addEventListener('error', (event) => {
+    console.error('捕获到错误:', event.error);
+    // 可以在这里添加错误上报逻辑
+});
+
+// 添加未处理的 Promise 错误处理
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('未处理的 Promise 错误:', event.reason);
+    // 可以在这里添加错误上报逻辑
+});
+
+// 添加资源加载错误处理
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('error', (event) => {
+        if (event.target.tagName === 'LINK' || event.target.tagName === 'SCRIPT') {
+            console.error('资源加载失败:', event.target.src || event.target.href);
+            // 可以在这里添加资源加载失败的降级处理
+        }
+    }, true);
+});
+
+// 添加页面加载进度条
+document.addEventListener('DOMContentLoaded', () => {
+    const loadingBar = document.createElement('div');
+    loadingBar.className = 'loading-progress';
+    document.body.appendChild(loadingBar);
+
+    // 监听资源加载
+    let loaded = 0;
+    const resources = document.querySelectorAll('img, video, script');
+    resources.forEach(item => {
+        item.addEventListener('load', () => {
+            loaded++;
+            const progress = (loaded / resources.length) * 100;
+            loadingBar.style.width = `${progress}%`;
+            if (loaded === resources.length) {
+                setTimeout(() => loadingBar.remove(), 300);
+            }
+        });
+    });
+});
+
+// 添加友好的错误提示
+function showErrorMessage(error, type = 'error') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = error.message || '操作失败，请稍后重试';
+    document.body.appendChild(toast);
+    
+    setTimeout(() => toast.remove(), 3000);
+} 

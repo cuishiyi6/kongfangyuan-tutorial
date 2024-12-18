@@ -5,8 +5,8 @@ body {
     max-width: 1600px;
     margin: 0 auto;
     padding: 20px 60px;
-    color: #333;
-    background: #f4f6f9;
+    color: var(--text-color);
+    background: var(--bg-color);
 }
 
 h1 {
@@ -716,7 +716,7 @@ h1 {
     }
 }
 
-/* 按钮组样式 */
+/* 按组样式 */
 .button-group {
     display: flex;
     gap: 16px;
@@ -1123,7 +1123,7 @@ h1 {
         display: none;
     }
 
-    /* 调整返回顶部按钮位置 */
+    /* 调整返���顶部按钮位置 */
     .back-to-top {
         right: 15px;
         bottom: 15px;
@@ -1208,6 +1208,66 @@ h1 {
     .plyr__controls button {
         min-height: 44px;
         min-width: 44px;
+    }
+}
+
+/* 添加更多响应式断点 */
+@media screen and (max-width: 480px) {
+    .download-section {
+        padding: 10px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .download-btn, .template-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* 添加交互反馈动画 */
+@keyframes buttonPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.button-click-feedback {
+    animation: buttonPop 0.3s ease;
+}
+
+/* 添加提示气泡 */
+.tooltip {
+    position: absolute;
+    background: var(--bg-color-secondary);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--text-color);
+    box-shadow: 0 2px 12px var(--shadow-color);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 添加移动端手势支持 */
+@media (max-width: 768px) {
+    .video-container {
+        touch-action: pan-y pinch-zoom;
+    }
+    
+    /* 优化触摸目标大小 */
+    .plyr__controls button {
+        min-width: 44px;
+        min-height: 44px;
     }
 }
   

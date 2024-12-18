@@ -33,61 +33,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// 移动端联系按钮处理
-document.addEventListener('DOMContentLoaded', function() {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// 等待 DOM 加载完成
+document.addEventListener('DOMContentLoaded', () => {
+    const contactButtons = document.querySelectorAll('.contact-button');
     
-    if (isMobile) {
-        const contactButtons = document.querySelectorAll('.contact-button');
-        let activeButton = null;
-        let hideTimeout;
-
+    // 检查是否存在联系按钮
+    if (!contactButtons || contactButtons.length === 0) return;
+    
+    // 移动端触摸处理
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         contactButtons.forEach(button => {
-            button.addEventListener('touchstart', function(e) {
-                // 阻止默认行为，防止立即触发链接
-                e.preventDefault();
-                
-                // 如果有其他展开的按钮，先收起
-                if (activeButton && activeButton !== this) {
-                    activeButton.classList.remove('show');
-                }
-                
-                // 清除之前的定时器
-                if (hideTimeout) {
-                    clearTimeout(hideTimeout);
-                }
-                
-                // 展开当前按钮
-                this.classList.add('show');
-                activeButton = this;
-                
-                // 设置定时器，3秒后自动收起
-                hideTimeout = setTimeout(() => {
-                    this.classList.remove('show');
-                    activeButton = null;
-                }, 3000);
+            let touchTimeout;
+            
+            button.addEventListener('touchstart', () => {
+                touchTimeout = setTimeout(() => {
+                    button.classList.add('show');
+                }, 200);
             });
-
-            // 点击展开的内容时触发实际操作
-            button.addEventListener('click', function(e) {
-                if (this.classList.contains('show')) {
-                    // 允许默认行为（拨打电话）
-                    return true;
-                }
-                // 阻止默认行为
-                e.preventDefault();
+            
+            button.addEventListener('touchend', () => {
+                clearTimeout(touchTimeout);
+                setTimeout(() => {
+                    button.classList.remove('show');
+                }, 1000);
             });
-        });
-
-        // 点击页面其他地方收起展开的按钮
-        document.addEventListener('touchstart', function(e) {
-            if (activeButton && !e.target.closest('.contact-button')) {
-                activeButton.classList.remove('show');
-                activeButton = null;
-                if (hideTimeout) {
-                    clearTimeout(hideTimeout);
-                }
-            }
         });
     }
 }); 

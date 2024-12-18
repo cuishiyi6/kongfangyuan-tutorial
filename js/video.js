@@ -138,3 +138,23 @@ function handleVideoLoading(players) {
 
 // 初始化页面时的播放器
 document.addEventListener('DOMContentLoaded', initializePlayers); 
+
+// 添加视频播放记忆功能
+function initializeVideoPlayer(player, videoId) {
+    // 读取上次播放位置
+    const lastTime = localStorage.getItem(`video-${videoId}-time`);
+    if (lastTime) {
+        player.currentTime = parseFloat(lastTime);
+    }
+
+    // 定期保存播放位置
+    player.on('timeupdate', () => {
+        localStorage.setItem(`video-${videoId}-time`, player.currentTime);
+    });
+
+    // 添加播放速度记忆
+    const lastSpeed = localStorage.getItem('video-playback-speed');
+    if (lastSpeed) {
+        player.speed = parseFloat(lastSpeed);
+    }
+} 
