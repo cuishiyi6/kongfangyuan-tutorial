@@ -1,6 +1,10 @@
 // 处理弹窗交互
 document.addEventListener('DOMContentLoaded', function() {
     const wechatBtn = document.getElementById('wechatBtn');
+    if (!wechatBtn) {
+        console.error('微信按钮未找到');
+        return; // 检查按钮是否存在
+    }
     const wechatModal = document.getElementById('wechatModal');
     const closeBtn = wechatModal.querySelector('.close-btn');
 

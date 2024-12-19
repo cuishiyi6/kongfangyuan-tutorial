@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/themes.css">
     
     <script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.min.js"></script>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net blob:; media-src 'self' blob: *; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' https://cdn.jsdelivr.net;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net blob:; media-src 'self' blob: *; img-src 'self' data: https: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="keywords" content="孔方源,智慧社区,物业管理,视频教程,使用指南">
     <meta name="author" content="孔方源科技">
@@ -45,20 +45,19 @@
     <svg style="display: none" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <symbol id="plyr-play" viewBox="0 0 18 18">
-                <path d="M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z"/>
+                <path d="M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z" fill="currentColor"/>
             </symbol>
             <symbol id="plyr-pause" viewBox="0 0 18 18">
-                <path d="M6 1H3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm6 0h-3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1z"/>
+                <path d="M6 1H3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm6 0h-3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1z" fill="currentColor"/>
             </symbol>
             <symbol id="plyr-muted" viewBox="0 0 18 18">
-                <path d="M12.4 12.5l2.1-2.1 2.1 2.1 1.4-1.4L15.9 9 18 6.9l-1.4-1.4-2.1 2.1-2.1-2.1L11 6.9 13.1 9 11 11.1zM3.786 6.008H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"/>
+                <path d="M12.4 12.5l2.1-2.1 2.1 2.1 1.4-1.4L15.9 9 18 6.9l-1.4-1.4-2.1 2.1-2.1-2.1L11 6.9 13.1 9 11 11.1zM3.786 6.008H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z" fill="currentColor"/>
             </symbol>
             <symbol id="plyr-volume" viewBox="0 0 18 18">
-                <path d="M15.6 3.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4C15.4 5.9 16 7.4 16 9c0 1.6-.6 3.1-1.8 4.3-.4.4-.4 1 0 1.4.2.2.5.3.7.3.3 0 .5-.1.7-.3C17.1 13.2 18 11.2 18 9s-.9-4.2-2.4-5.7z"/>
-                <path d="M11.282 5.282a.909.909 0 000 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 000 1.316c.145.145.636.262 1.018.156a.725.725 0 00.298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 00-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z"/>
+                <path d="M15.6 3.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4C15.4 5.9 16 7.4 16 9c0 1.6-.6 3.1-1.8 4.3-.4.4-.4 1 0 1.4.2.2.5.3.7.3.3 0 .5-.1.7-.3C17.1 13.2 18 11.2 18 9s-.9-4.2-2.4-5.7z" fill="currentColor"/>
             </symbol>
             <symbol id="plyr-fullscreen" viewBox="0 0 18 18">
-                <path d="M10 3h3.6l-4 4L11 8.4l4-4v3.6h2V3h-7v2zm-8 12v-7h2v3.6l4-4L9.4 9l-4 4h3.6v2H2z"/>
+                <path d="M10 3h3.6l-4 4L11 8.4l4-4v3.6h2V3h-7v2zm-8 12v-7h2v3.6l4-4L9.4 9l-4 4h3.6v2H2z" fill="currentColor"/>
             </symbol>
         </defs>
     </svg>
@@ -117,7 +116,7 @@
                         <span class="download-item-title">智慧社区平台使用手册</span>
                         <span class="download-item-desc">平台功能完整使用说明</span>
                     </div>
-                    <span class="download-item-action">下���</span>
+                    <span class="download-item-action">下载</span>
                 </a>
                 <a href="./docs/使用APP或小程序绑定小区和房间操作步骤.docx" download class="download-item">
                     <svg class="doc-icon" viewBox="0 0 24 24" width="24" height="24">
@@ -192,7 +191,7 @@
     <div class="chapter-list-modal" id="chapterModal">
         <div class="chapter-list">
             <span class="chapter-close">&times;</span>
-            <a href="#video-1" data-video="1">1. 物业注册到孔方源平台</a>
+            <a href="#video-1" data-video="1">1. 物业注册到方源平台</a>
             <a href="#video-2" data-video="2">2. 陆物业平台添加小区</a>
             <a href="#video-3" data-video="3">3. 小区添加楼栋、单元、房间</a>
             <a href="#video-4" data-video="4">4. 添加业主的两种方式</a>
@@ -203,7 +202,12 @@
     </div>
 
     <!-- 视频容器 -->
-    <div id="videoContainer"></div>
+    <div id="videoContainer">
+        <div class="video-container">
+            <div class="video-loading"></div>
+            <video class="video-player" ...></video>
+        </div>
+    </div>
 
     <!-- 替换原有的系按钮 -->
     <div class="contact-buttons">
@@ -256,7 +260,7 @@
                 </div>
                 <div class="shortcut-item">
                     <kbd>?</kbd>
-                    <span>显示此帮助</span>
+                    <span>示此帮助</span>
                 </div>
             </div>
         </div>

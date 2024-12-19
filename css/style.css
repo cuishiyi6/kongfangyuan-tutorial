@@ -461,7 +461,7 @@ h1 {
     z-index: 1000;
 }
 
-/* ���系按钮样式优化 */
+/* 按钮样式优化 */
 .contact-button {
     display: flex;
     align-items: center;
@@ -1222,7 +1222,7 @@ h1 {
         touch-action: pan-y pinch-zoom;
     }
     
-    /* 优化触摸目标��小 */
+    /* 优化触摸目标小 */
     .plyr__controls button {
         min-width: 44px;
         min-height: 44px;
@@ -1598,7 +1598,7 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: var(--letter-spacing);
 }
 
-/* 模态框基��样式 */
+/* 模态框基样式 */
 .download-modal,
 .template-modal {
     background: var(--modal-overlay);
@@ -1717,16 +1717,14 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 播放器图标样式 */
 .plyr__control svg {
+    fill: currentColor !important;
     width: 18px !important;
     height: 18px !important;
-    fill: currentColor !important;
-    stroke: none !important;
 }
 
 .plyr__control--overlaid svg {
     width: 32px !important;
     height: 32px !important;
-    fill: #fff !important;
 }
 
 /* 确保图标在暗色主题下可见 */

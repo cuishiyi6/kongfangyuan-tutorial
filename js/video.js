@@ -70,7 +70,7 @@ function initializePlayers() {
 
         // 添加结束事件监听
         plyrInstance.on('ended', () => {
-            // 视频播放结束时清除引用
+            // 视频���时清除引用
             if (currentPlayingPlayer === plyrInstance) {
                 currentPlayingPlayer = null;
             }
@@ -89,7 +89,15 @@ function initializePlayers() {
 function handleVideoLoading(players) {
     players.forEach(player => {
         const container = player.elements.container.closest('.video-container');
+        if (!container) {
+            console.error('视频容器未找到');
+            return; // 检查 container 是否存在
+        }
         const loading = container.querySelector('.video-loading');
+        if (!loading) {
+            console.error('加载指示器未找到');
+            return; // 检查 loading 是否存在
+        }
         
         player.on('ready', () => loading.style.display = 'none');
         player.on('loadstart', () => loading.style.display = 'block');
@@ -98,7 +106,9 @@ function handleVideoLoading(players) {
 }
 
 // 初始化页面时的播放器
-document.addEventListener('DOMContentLoaded', initializePlayers); 
+document.addEventListener('DOMContentLoaded', () => {
+    initializePlayers();
+});
 
 // 添加视频播放记忆功能
 function initializeVideoPlayer(player, videoId) {
